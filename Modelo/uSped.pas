@@ -5,10 +5,10 @@ interface
 uses
    Contnrs,            //  <--  Nesta Unit está implementado TObjectList
 
-   MVCInterfaces,uRegistro,uEmpresa, UI010;
+   MVCInterfaces,uRegistroEmpresaContabil,uEmpresa, UI010, uRegistro;
 
 type
-   TSped = class(TRegistro)
+   TSped = class(TRegistroEmpresaContabil)
       private
          fID              : Integer;
          FOnModeloMudou   : TModeloMudou;

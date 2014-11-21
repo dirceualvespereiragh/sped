@@ -16,9 +16,9 @@ type
     btGeracao: TButton;
     procedure btParametrosClick(Sender: TObject);
   private
-    { Private declarations }
+
   public
-    { Public declarations }
+
   end;
 
 var

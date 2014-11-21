@@ -49,32 +49,32 @@ var
 begin
    lListaIndicadorOperacoes := TObjectList.Create;
 
-   lIndicadorOperacoes := TCST.Create;
+   lIndicadorOperacoes := TIndicadorOperacoes.Create;
    lIndicadorOperacoes.ID        := 1;
    lIndicadorOperacoes.Codigo    := '01';
    lIndicadorOperacoes.Descricao :=  'Exclusivamente operações de Instituições Financeiras e Assemelhadas';
    lListaIndicadorOperacoes.add( lIndicadorOperacoes);
-   lIndicadorOperacoes := TCST.Create;
+   lIndicadorOperacoes := TIndicadorOperacoes.Create;
    lIndicadorOperacoes.ID        := 2;
    lIndicadorOperacoes.Codigo    := '02';
    lIndicadorOperacoes.Descricao :=  'Exclusivamente operações de Seguros Privados';
    lListaIndicadorOperacoes.add( lIndicadorOperacoes);
-   lIndicadorOperacoes := TCST.Create;
+   lIndicadorOperacoes := TIndicadorOperacoes.Create;
    lIndicadorOperacoes.ID        := 3;
    lIndicadorOperacoes.Codigo    := '03';
    lIndicadorOperacoes.Descricao :=  'Exclusivamente operações de Previdência Complementar';
    lListaIndicadorOperacoes.add( lIndicadorOperacoes);
-   lIndicadorOperacoes := TCST.Create;
+   lIndicadorOperacoes := TIndicadorOperacoes.Create;
    lIndicadorOperacoes.ID        := 4;
    lIndicadorOperacoes.Codigo    := '04';
    lIndicadorOperacoes.Descricao :=  'Exclusivamente operações de Capitalização';
    lListaIndicadorOperacoes.add( lIndicadorOperacoes);
-   lIndicadorOperacoes := TCST.Create;
+   lIndicadorOperacoes := TIndicadorOperacoes.Create;
    lIndicadorOperacoes.ID        := 5;
    lIndicadorOperacoes.Codigo    := '05';
    lIndicadorOperacoes.Descricao :=  'Exclusivamente operações de Planos de Assistência à Saúde';
    lListaIndicadorOperacoes.add( lIndicadorOperacoes);
-   lIndicadorOperacoes := TCST.Create;
+   lIndicadorOperacoes := TIndicadorOperacoes.Create;
    lIndicadorOperacoes.ID        := 6;
    lIndicadorOperacoes.Codigo    := '06';
    lIndicadorOperacoes.Descricao :=  'Realizou operações referentes a mais de um dos indicadores acima';
