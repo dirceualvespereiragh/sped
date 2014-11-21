@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="y52kups9cil_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="design:view:::32xz3jzay2h_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,100,134" />
+      <reference referencedUin="delphi:e_class:src:SPED:SPED.@unitclass" />
+    </reference>
+    <reference referencedUin="design:view:::sex5o4feh9n_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="129,1,110,151" />
+      <reference referencedUin="delphi:e_class:src:SPED:uPrincipal.@unitclass" />
+      <reference referencedUin="delphi:e_class:src:SPED:uPrincipal.TfrmSped" />
+    </reference>
+  </view>
+</nodeSet>
