@@ -36,6 +36,7 @@ procedure TfrmSped.btParametrosClick(Sender: TObject);
 var
    lControle: TControle;
 begin
+
    lControle := TControle.Create;
    lControle.Initialize;
 end;

@@ -24,10 +24,12 @@ type
       procedure Initialize;
       procedure ListaEmpresas;
       procedure ListaSped;
-      procedure IncluiI010;
+      procedure TelaIncluiI010;
       procedure  Salvar;
       procedure CopiaObjectList(lObjectList : TObjectList;lComboBox : TComboBox; lClasse : TClass);
       procedure LimpaStringGrid(lStringGrid : TStringGrid);
+      procedure MontaTelaIncluiI010;
+      Procedure MontaCamposTelaIncluiI010(var fcbIdentificadorOperacao : TComboBox;   flIdentificadorOperacao  : TLabel );
    end;
 
 implementation
@@ -46,6 +48,7 @@ constructor TControle.Create;
 begin
    fModelo       := TEmpresa.Create;
    fModeloSped   := TSped.create;
+   fModeloI010   := TI010.create;
    FView         := TViewConfiguracoes.Create(nil);
 end;
 
@@ -60,7 +63,7 @@ begin
    FView.Modelo            := fModelo;
    fModelo.OnModeloMudou   := FView.ModeloMudou;
    FView.DoLista           := ListaSped;
-   fView.IncluiI010        := IncluiI010;
+   fView.IncluiI010        := TelaIncluiI010;
    ListaEmpresas;
    FView.Initialize;
    FView.ShowModal;
@@ -122,30 +125,15 @@ begin
       lStringGrid.Rows[I].Clear;
 end;
 
-procedure TControle.IncluiI010;
+procedure TControle.TelaIncluiI010;
 var
    cbIdentificadorOperacao : TComboBox;
    lIdentificadorOperacao  : TLabel;
    lIndicadorOperacoes     : TObjectList;
 begin
-   fViewInclusao := TViewInclusao.Create(nil);
-   fViewInclusao.Initialize;
-   fViewInclusao.Salvar    := Salvar;
-   fViewInclusao.Height := 270;
-   fViewInclusao.reTitulo.Clear;
-   fViewInclusao.reTitulo.Lines.Add('Registro I010');
-   fViewInclusao.reTitulo.Lines.Add('I010 - Identificação do Estabelecimento');
-   lIdentificadorOperacao := Tlabel.Create (fViewInclusao);
-   lIdentificadorOperacao.Parent :=  fViewInclusao.Panel3;
-   lIdentificadorOperacao.Left   := 40;
-   lIdentificadorOperacao.Top    := 55;
-   lIdentificadorOperacao.Caption :=  'Identificador de Operações realizadas no período';
-   cbIdentificadorOperacao := TComboBox.Create(fViewInclusao);
-   cbIdentificadorOperacao.Name   := 'cbIdentificadorOperacao';
-   cbIdentificadorOperacao.Parent := fViewInclusao.Panel3;
-   cbIdentificadorOperacao.Left   := 288;
-   cbIdentificadorOperacao.Top    := 52;
-   cbIdentificadorOperacao.Width  := 470;
+   fModeloI010.Empresa.ID :=  fModeloSped.Empresa.ID;
+   MontaTelaIncluiI010;
+   MontaCamposTelaIncluiI010(cbIdentificadorOperacao,lIdentificadorOperacao);
    fModeloIndicadorOperacoes := TIndicadorOperacoes.create;
    lIndicadorOperacoes :=  TObjectlist.create;
    lIndicadorOperacoes :=  fModeloIndicadorOperacoes.Todos;
@@ -163,14 +151,41 @@ var
 begin
    IndiceSelecionado         := (fViewInclusao.FindComponent('cbIdentificadorOperacao') as TComboBox).ItemIndex;
    fModeloIndicadorOperacoes :=  ( TIndicadorOperacoes ( (fViewInclusao.FindComponent('cbIdentificadorOperacao') as TComboBox).Items.Objects[IndiceSelecionado]));
+   fModeloI010.IndicadorOperacoes :=  fModeloIndicadorOperacoes;
+   fModeloI010.Sped               := fModeloSped.ID;
    // Verificar se o SPED da Empresa esta gravado
    if (not  Assigned(fModeloSped.Procurar() ) )then begin
       fModeloSped.inserir();
    end;
-
+   fModeloI010.Sped := fModeloSped.ID;
    fModeloI010.Inserir();
-//   fView.sgI010.Cells[1,1]   := inttostr(fModeloSped.Empresa.ID);
-//   fView.sgI010.Cells[2,1]   :=  fModeloIndicadorOperacoes.Codigo;
+end;
+
+procedure TControle.MontaTelaIncluiI010;
+begin
+   fViewInclusao := TViewInclusao.Create(nil);
+   fViewInclusao.Initialize;
+   fViewInclusao.Salvar    := Salvar;
+   fViewInclusao.Height := 270;
+   fViewInclusao.reTitulo.Clear;
+   fViewInclusao.reTitulo.Lines.Add('Registro I010');
+   fViewInclusao.reTitulo.Lines.Add('I010 - Identificação do Estabelecimento');
+end;
+
+procedure TControle.MontaCamposTelaIncluiI010(
+  var fcbIdentificadorOperacao: TComboBox; flIdentificadorOperacao: TLabel);
+begin
+   flIdentificadorOperacao := Tlabel.Create (fViewInclusao);
+   flIdentificadorOperacao.Parent :=  fViewInclusao.Panel3;
+   flIdentificadorOperacao.Left   := 40;
+   flIdentificadorOperacao.Top    := 55;
+   flIdentificadorOperacao.Caption :=  'Identificador de Operações realizadas no período';
+   fcbIdentificadorOperacao := TComboBox.Create(fViewInclusao);
+   fcbIdentificadorOperacao.Name   := 'cbIdentificadorOperacao';
+   fcbIdentificadorOperacao.Parent := fViewInclusao.Panel3;
+   fcbIdentificadorOperacao.Left   := 288;
+   fcbIdentificadorOperacao.Top    := 52;
+   fcbIdentificadorOperacao.Width  := 470;
 
 end;
 

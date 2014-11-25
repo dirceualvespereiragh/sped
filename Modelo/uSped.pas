@@ -81,7 +81,7 @@ end;
 
 procedure TSped.AdicionaI010(fI010: TI010);
 begin
-   if GetI010s.indexOf(fI010s) = -1 then begin // o Objeto Especialidade ainda não existe na Lista de Objetos
+   if GetI010s.indexOf(fI010s) = -1 then begin // o Objeto I010 ainda não existe na Lista de Objetos
       fI010s.Add(fI010);
       // fI010s.AdicionaSped(self);   -- Acredito que não é necessário fazer este chamada neste caso
    end;
@@ -112,6 +112,9 @@ var
 begin
    lSpedBD := TSpedBD.Create;
    result := lSpedBD.TodosDaEmpresa(self);
+
+   // Montar um Objectlist de I010 e chamar SetI010s
+   //aqui
    lSpedBD.Free;
    lSpedBD := nil;
 end;

@@ -24,7 +24,7 @@ type
 implementation
 
 uses
-   uEmpresa, uSped, UEmpresaContabilIB  ;
+   uEmpresa, uSped, UEmpresaContabilIB , UI010 ;
 
 function TSpedBD.Alterar(const oRegistro: TRegistro): Boolean;
 begin
@@ -72,6 +72,23 @@ end;
 
 function TSpedBD.Procurar(const oRegistro: TRegistro): TRegistro;
 begin
+   SetaDataBase(oRegistro);
+   Qry.SQL.Clear;
+   Qry.SQL.Add( '    SELECT ID , EMPRESA FROM  SPED              '    );
+   Qry.SQL.Add('     WHERE ID      =  :pID                       '    );
+   Qry.ParamByName('pID').AsInteger := TSped(oRegistro).ID ;
+   try
+       Qry.Open;
+       if (not Qry.IsEmpty) then begin
+          Qry.First;
+          TSped(oRegistro).ID          := Qry.FieldByName('ID').AsInteger;
+          TSped(oRegistro).Empresa.ID  := Qry.FieldByName('EMPRESA').AsInteger;
+          result := TSped(oRegistro);
+       end
+       else result := Nil;
+    except
+       result := Nil;
+    end;
 end;
 
 function TSpedBD.Todos(): TObjectList;
@@ -82,6 +99,8 @@ function TSpedBD.TodosDaEmpresa(const oRegistro: TRegistro): TObjectList;
 var
    lSped : TSped;
    lSpeds : TObjectList;
+   lI010s : TObjectList;
+   lI010  : TI010;
 begin
    lSpeds := TObjectList.create;
    SetaDataBase(oRegistro);
@@ -98,6 +117,11 @@ begin
              lSped := TSped.Create;
              lSped.ID          := Qry.FieldByName('ID').AsInteger;
              lSped.Empresa.ID  := Qry.FieldByName('EMPRESA').AsInteger;
+             lI010             := TI010.create;
+             lI010.Sped        := lSped.ID;
+             lI010s            := TObjectList.Create;
+             lI010s            := lI010.getTodosDoSped;
+             lSped.I010s       := lI010s;
              lSpeds.Add(lSped);
              Qry.Next;
           end;

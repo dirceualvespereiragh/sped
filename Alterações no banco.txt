@@ -1,0 +1,21 @@
+ Alterações no Banco
+
+ Empresa Contabil (E00??)
+
+CREATE TABLE SPED (
+    ID       INTEGER,
+    EMPRESA  INTEGER
+);
+
+
+
+
+CREATE TABLE I010 (
+    ID                  INTEGER,
+    SPED                INTEGER,
+    INDICADOROPERACOES  INTEGER
+);
+
+
+CREATE GENERATOR SPED;
+CREATE GENERATOR I010;
