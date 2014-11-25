@@ -24,7 +24,7 @@ type
 implementation
 
 uses
-   uEmpresa, uSped, UEmpresaContabilIB, UI010  ;
+   uEmpresa, uSped, UEmpresaContabilIB  ;
 
 function TSpedBD.Alterar(const oRegistro: TRegistro): Boolean;
 begin
@@ -80,13 +80,10 @@ end;
 
 function TSpedBD.TodosDaEmpresa(const oRegistro: TRegistro): TObjectList;
 var
-   lSped       : TSped;
-   lSpedLista  : TObjectList;
- //  lI010s  : TObjectList;
- //  lI010   : TI010;
- inteiro :Integer;
+   lSped : TSped;
+   lSpeds : TObjectList;
 begin
-   lSpedLista := TObjectList.create;
+   lSpeds := TObjectList.create;
    SetaDataBase(oRegistro);
    Qry.SQL.Clear;
 
@@ -98,27 +95,18 @@ begin
        if (not Qry.IsEmpty) then begin
           Qry.First;
           while (not Qry.Eof ) do begin
-             lSped             := TSped.Create;
+             lSped := TSped.Create;
              lSped.ID          := Qry.FieldByName('ID').AsInteger;
              lSped.Empresa.ID  := Qry.FieldByName('EMPRESA').AsInteger;
-             //lI010       := TI010.create;
-             //lI010.Sped  :=  lSped.ID ;
-             //lI010s :=  lI010.
-             //lSped.I010s
-             lSpedLista.Add(lSped);
-             inteiro  :=  TSped(lSpedLista[0]).ID;
+             lSpeds.Add(lSped);
              Qry.Next;
           end;
-          inteiro  := TSped(lSpedLista[0]).ID;
-          l2 :=   lSpedLista ;
-          result := lSpedLista;
+          result := lSpeds;
        end
        else result := Nil;
     except
        result := Nil;
     end;
-    lSpedLista.Free;
-    lSpedLista := nil;
 end;
 
 end.
