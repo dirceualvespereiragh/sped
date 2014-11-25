@@ -79,7 +79,7 @@ begin
    lIndicadorOperacoes.Codigo    := '06';
    lIndicadorOperacoes.Descricao :=  'Realizou operações referentes a mais de um dos indicadores acima';
    lListaIndicadorOperacoes.add( lIndicadorOperacoes);
-
+   result :=   lListaIndicadorOperacoes;
 end;
 
 end.

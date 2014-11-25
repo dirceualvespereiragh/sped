@@ -46,6 +46,7 @@ end;
 function TSped.GetI010s: TObjectList;
 begin
    result := fI010s;
+
 end;
 //}  Exemplo desta função em Java
 //public Set getAutores() {

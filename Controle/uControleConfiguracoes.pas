@@ -46,7 +46,9 @@ constructor TControle.Create;
 begin
    fModelo       := TEmpresa.Create;
    fModeloSped   := TSped.create;
+   fModeloI010   := TI010.create;
    FView         := TViewConfiguracoes.Create(nil);
+
 end;
 
 destructor TControle.Destroy;
@@ -90,14 +92,16 @@ end;
 
 procedure TControle.ListaSped;
 var
-   lSpeds, lI010 : TObjectList;
-   I      : Integer;
+   lSpeds, lI010            : TObjectList;
+   I ,IndiceSelecionado     : Integer;
 begin
    fModeloSped.Empresa.ID :=  ( TEmpresa( fView.cbEmpresa.Items.Objects[fView.cbEmpresa.ItemIndex]).ID);
+
    lSpeds := TobjectList.create;
    lSpeds := fModeloSped.TodosDaEmpresa;
    LimpaStringGrid(fView.sgI010);
    if ( Assigned(lSpeds)) then begin
+      fModeloSped.ID :=  TSped(lSpeds[0]).ID;
       lI010 := TobjectList.create ;
       I := 0;
       lI010 :=  TSped(lSpeds[0]).I010s ;
@@ -128,6 +132,7 @@ var
    lIdentificadorOperacao  : TLabel;
    lIndicadorOperacoes     : TObjectList;
 begin
+   fModeloI010.Empresa.ID :=  fModeloSped.Empresa.ID;
    fViewInclusao := TViewInclusao.Create(nil);
    fViewInclusao.Initialize;
    fViewInclusao.Salvar    := Salvar;
@@ -163,15 +168,14 @@ var
 begin
    IndiceSelecionado         := (fViewInclusao.FindComponent('cbIdentificadorOperacao') as TComboBox).ItemIndex;
    fModeloIndicadorOperacoes :=  ( TIndicadorOperacoes ( (fViewInclusao.FindComponent('cbIdentificadorOperacao') as TComboBox).Items.Objects[IndiceSelecionado]));
+   fModeloI010.IndicadorOperacoes :=  fModeloIndicadorOperacoes;
+   fModeloI010.Sped               := fModeloSped.ID;   
    // Verificar se o SPED da Empresa esta gravado
    if (not  Assigned(fModeloSped.Procurar() ) )then begin
       fModeloSped.inserir();
    end;
 
    fModeloI010.Inserir();
-//   fView.sgI010.Cells[1,1]   := inttostr(fModeloSped.Empresa.ID);
-//   fView.sgI010.Cells[2,1]   :=  fModeloIndicadorOperacoes.Codigo;
-
 end;
 
 end.
