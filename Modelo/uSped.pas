@@ -64,11 +64,13 @@ procedure TSped.SetI010s(const Value: TObjectList);
 var
    I : Integer;
 begin
-  I := 0;
-  while (I < (Value.Count) ) do begin
-     AdicionaI010( TI010(value.Items[i]) );
-     inc(I);
-  end;
+    if ( Assigned(Value)) then begin
+       I := 0;
+       while (I < (Value.Count) ) do begin
+          AdicionaI010( TI010(value.Items[i]) );
+          inc(I);
+       end;
+    end;
 end;
 // exemplo desta função em  do Java
 //public void setAutores(Set autores) {
@@ -112,9 +114,6 @@ var
 begin
    lSpedBD := TSpedBD.Create;
    result := lSpedBD.TodosDaEmpresa(self);
-
-   // Montar um Objectlist de I010 e chamar SetI010s
-   //aqui
    lSpedBD.Free;
    lSpedBD := nil;
 end;

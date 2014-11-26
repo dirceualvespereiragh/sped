@@ -55,6 +55,8 @@ begin
    result := lI010BD.getTodosDoSped(self);
    lI010BD.Free;
    lI010BD := nil;
+
+   result := nil;
 end;
 
 function TI010.inserir: Boolean;

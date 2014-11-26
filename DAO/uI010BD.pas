@@ -92,39 +92,42 @@ end;
 
 
 function TI010BD.getTodosDoSped(const oRegistro: TRegistro): TObjectList;
-var
-   lSped   : TSped;
-   lSpeds  : TObjectList;
-   lI010s  : TObjectList;
-   lI010   : TI010;
+//var
+//   lSped   : TSped;
+//   lSpeds  : TObjectList;
+//   lI010s  : TObjectList;
+//   lI010   : TI010;
 begin
-   lI010s := TObjectList.create;
-   SetaDataBase(oRegistro);
-   Qry.SQL.Clear;
+//   lI010s := TObjectList.create;
+//   SetaDataBase(oRegistro);
+//   Qry.SQL.Clear;
 
-   Qry.SQL.Add( '    SELECT ID , INDICADOROPERACOES FROM  I010       '    );
-   Qry.SQL.Add('     WHERE SPED =  :pSPED                          '    );
-   Qry.ParamByName('pSPED').AsInteger := TSped(oRegistro).ID ;
-   try
-       Qry.Open;
-       if (not Qry.IsEmpty) then begin
-          Qry.First;
-          while (not Qry.Eof ) do begin
-             lI010 := TI010.Create;
-             lI010.ID                     := Qry.FieldByName('ID').AsInteger;
-             lI010.IndicadorOperacoes.ID  := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
-             lI010.Sped                   := TSped(oRegistro).ID ;
-             lI010s.Add(lI010);
-             Qry.Next;
-          end;
-          result := lI010s;
-       end
-       else result := Nil;
-    except
-       result := Nil;
-    end;
-    lI010s.Free;
-    lI010s := nil;
+//   Qry.SQL.Add( '    SELECT ID , INDICADOROPERACOES FROM  I010       '    );
+//   Qry.SQL.Add('     WHERE SPED =  :pSPED                          '    );
+//   Qry.ParamByName('pSPED').AsInteger := TSped(oRegistro).ID ;
+   //try
+      // Qry.Open;
+       //if (not Qry.IsEmpty) then begin
+       //   Qry.First;
+       //   while (not Qry.Eof ) do begin
+       //      lI010 := TI010.Create;
+       //      lI010.ID                     := Qry.FieldByName('ID').AsInteger;
+       //      lI010.IndicadorOperacoes.ID  := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
+       //      lI010.Sped                   := TSped(oRegistro).ID ;
+       //      lI010s.Add(lI010);
+       //      Qry.Next;
+        //  end;
+        //  result := lI010s;
+       //end
+       //else result := Nil;
+    //except
+  //     result := Nil;
+//    end;
+
+    result := Nil;
+
+//    lI010s.Free;
+//    lI010s := nil;
 
 end;
 

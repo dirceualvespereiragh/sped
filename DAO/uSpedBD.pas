@@ -18,7 +18,7 @@ type
          function Procurar          (const oRegistro : TRegistro) : TRegistro;    override;
          function Todos             ()                            : TObjectList;  override ;
          function TodosDaEmpresa    (const oRegistro : TRegistro)                            : TObjectList;  overload ;
-         procedure SetaDataBase (const oRegistro : TRegistro);
+         procedure SetaDataBase     (const oRegistro : TRegistro);
    end;
 
 implementation
@@ -102,6 +102,7 @@ var
    lI010s : TObjectList;
    lI010  : TI010;
 begin
+   SetaDataBase(oRegistro);
    lSpeds := TObjectList.create;
    SetaDataBase(oRegistro);
    Qry.SQL.Clear;
@@ -123,8 +124,9 @@ begin
              lI010s            := lI010.getTodosDoSped;
              lSped.I010s       := lI010s;
              lSpeds.Add(lSped);
-             Qry.Next;
+             self.Qry.Next;
           end;
+
           result := lSpeds;
        end
        else result := Nil;
