@@ -11,7 +11,7 @@ type
 
    TIndicadorOperacoes = class(TRegistro)
       private
-         fID              : Integer;   // Toda chave primaria nossa no banco dentro do objeto vai chamar ID
+         fID               : Integer;   // Toda chave primaria nossa no banco dentro do objeto vai chamar ID
          fCodigo           : String;
          fDescricao        : String;
          procedure SetCodigo(const Value: String);

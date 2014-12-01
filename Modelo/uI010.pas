@@ -44,19 +44,18 @@ uses uI010BD, UEmpresa;
 
 constructor TI010.create;
 begin
-   Empresa := TEmpresa.create;
+   Empresa            := TEmpresa.create;
+   IndicadorOperacoes :=  TIndicadorOperacoes.create;
 end;
 
 function TI010.getTodosDoSped: TObjectList;
 var
    lI010BD : TI010BD;
 begin
-   lI010BD := lI010BD.Create;
+   lI010BD := TI010BD.Create;
    result := lI010BD.getTodosDoSped(self);
    lI010BD.Free;
    lI010BD := nil;
-
-   result := nil;
 end;
 
 function TI010.inserir: Boolean;

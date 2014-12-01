@@ -18,7 +18,7 @@ type
          function Procurar          (const oRegistro : TRegistro) : TRegistro;    override;
          function Todos             ()                            : TObjectList;  override ;
          procedure SetaDataBase (const oRegistro : TRegistro);
-         function getTodosDoSped(const oRegistro: TRegistro): TObjectList;
+         function getTodosDoSped(const oRegistro : TRegistro): TObjectList;
    end;
 
 implementation
@@ -83,7 +83,10 @@ begin
 end;
 
 function TI010BD.Procurar(const oRegistro: TRegistro): TRegistro;
+var
+   I : Integer;
 begin
+   i :=   TSped(oRegistro).ID 
 end;
 
 function TI010BD.Todos(): TObjectList;
@@ -92,43 +95,36 @@ end;
 
 
 function TI010BD.getTodosDoSped(const oRegistro: TRegistro): TObjectList;
-//var
-//   lSped   : TSped;
-//   lSpeds  : TObjectList;
-//   lI010s  : TObjectList;
-//   lI010   : TI010;
+var
+   lI010s  : TObjectList;
+   lI010   : TI010;
 begin
-//   lI010s := TObjectList.create;
-//   SetaDataBase(oRegistro);
-//   Qry.SQL.Clear;
-
-//   Qry.SQL.Add( '    SELECT ID , INDICADOROPERACOES FROM  I010       '    );
-//   Qry.SQL.Add('     WHERE SPED =  :pSPED                          '    );
-//   Qry.ParamByName('pSPED').AsInteger := TSped(oRegistro).ID ;
-   //try
-      // Qry.Open;
-       //if (not Qry.IsEmpty) then begin
-       //   Qry.First;
-       //   while (not Qry.Eof ) do begin
-       //      lI010 := TI010.Create;
-       //      lI010.ID                     := Qry.FieldByName('ID').AsInteger;
-       //      lI010.IndicadorOperacoes.ID  := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
-       //      lI010.Sped                   := TSped(oRegistro).ID ;
-       //      lI010s.Add(lI010);
-       //      Qry.Next;
-        //  end;
-        //  result := lI010s;
-       //end
-       //else result := Nil;
-    //except
-  //     result := Nil;
-//    end;
-
-    result := Nil;
-
-//    lI010s.Free;
+   lI010s := TObjectList.create;
+   SetaDataBase(oRegistro);
+   Qry.SQL.Clear;
+   Qry.SQL.Add( '    SELECT ID , INDICADOROPERACOES FROM  I010       '    );
+   Qry.SQL.Add('     WHERE SPED =  :pSPED                          '    );
+   Qry.ParamByName('pSPED').AsInteger := TI010(oRegistro).SPED ;
+   try
+       Qry.Open;
+       if (not Qry.IsEmpty) then begin
+          Qry.First;
+          while (not Qry.Eof ) do begin
+             lI010 := TI010.Create;
+             lI010.ID                     := Qry.FieldByName('ID').AsInteger;
+             lI010.IndicadorOperacoes.ID  := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
+             lI010.Sped                   := TI010(oRegistro).SPED ;
+             lI010s.Add(lI010);
+             Qry.Next;
+          end;
+          result := lI010s;
+       end
+       else result := Nil;
+    except
+       result := Nil;
+    end;
+//    lI010s.Free;   Precisa entender porque limpou o RESULT tambem, por isso esta comentado para não limpar
 //    lI010s := nil;
-
 end;
 
 end.
