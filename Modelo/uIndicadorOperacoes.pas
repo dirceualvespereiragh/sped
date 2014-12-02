@@ -22,6 +22,7 @@ type
          property Descricao      : String      read fDescricao   write SetDescricao;
          property Codigo         : String      read fCodigo      write SetCodigo;
          function Todos : TObjectList;
+         function Procurar  ()  : TRegistro;
          constructor create();
    end;
 
@@ -38,6 +39,15 @@ begin
 
 end;
 
+function TIndicadorOperacoes.Procurar: TRegistro;
+var
+   lIndicadorOperacoesBD : TIndicadorOperacoesBD;
+begin
+   lIndicadorOperacoesBD := TIndicadorOperacoesBD.Create;
+   result := lIndicadorOperacoesBD.Procurar(self);
+  // lIndicadorOperacoesBD.Free;
+  // lIndicadorOperacoesBD := nil;
+end;
 procedure TIndicadorOperacoes.SetCodigo(const Value: String);
 begin
   fCodigo := Value;

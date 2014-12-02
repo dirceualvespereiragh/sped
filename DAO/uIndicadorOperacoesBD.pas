@@ -39,7 +39,19 @@ begin
 end;
 
 function TIndicadorOperacoesBD.Procurar(const oRegistro: TRegistro): TRegistro;
+var
+   I   : Integer;
+   lID : Integer;
+   lLista : TObjectList;
 begin
+   lID  :=  TIndicadorOperacoes(oRegistro).ID;
+   I := 0;
+   lLista := Todos;
+   for I := 0 to (lLista.count-1)  do begin
+      if TIndicadorOperacoes(lLista.Items[I]).ID = lID then begin
+         TIndicadorOperacoes(oRegistro).Descricao :=  TIndicadorOperacoes(lLista.Items[I]).Descricao ;
+      end;
+   end;
 end;
 
 function TIndicadorOperacoesBD.Todos(): TObjectList;

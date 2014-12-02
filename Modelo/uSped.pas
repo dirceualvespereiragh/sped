@@ -5,7 +5,7 @@ interface
 uses
    Contnrs,            //  <--  Nesta Unit está implementado TObjectList
 
-   MVCInterfaces,uRegistroEmpresaContabil,uEmpresa, UI010, uRegistro;
+   MVCInterfaces,uRegistroEmpresaContabil,uEmpresa, UI010, uRegistro , uExcecao, SysUtils;  // apagar uexcecao
 
 type
    TSped = class(TRegistroEmpresaContabil)
@@ -41,6 +41,7 @@ constructor TSped.create;
 begin
    Empresa := TEmpresa.create;
    I010s   := TObjectList.create;
+   fI010s  := TObjectList.create;
 end;
 
 function TSped.GetI010s: TObjectList;
@@ -59,6 +60,7 @@ procedure TSped.SetEmpresa(const Value: TEmpresa);
 begin
   fEmpresa := Value;
 end;
+
 
 procedure TSped.SetI010s(const Value: TObjectList);
 var
@@ -83,7 +85,7 @@ end;
 
 procedure TSped.AdicionaI010(fI010: TI010);
 begin
-   if GetI010s.indexOf(fI010s) = -1 then begin // o Objeto I010 ainda não existe na Lista de Objetos
+   if GetI010s.indexOf(fI010) = -1 then begin // o Objeto I010 ainda não existe na Lista de Objetos
       fI010s.Add(fI010);
       // fI010s.AdicionaSped(self);   -- Acredito que não é necessário fazer este chamada neste caso
    end;

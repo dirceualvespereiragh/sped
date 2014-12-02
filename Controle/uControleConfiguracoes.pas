@@ -106,7 +106,7 @@ begin
       lI010 :=  TSped(lSpeds[0]).I010s ;
       if ( Assigned(lI010)) then begin
          while (I < ( lI010.Count) ) do begin
-            fView.sgI010.Cells[1+I,1] :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI010.Cells[0,1+I] :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
             inc(I);
          END;
       end;

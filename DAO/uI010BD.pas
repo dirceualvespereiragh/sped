@@ -98,6 +98,7 @@ function TI010BD.getTodosDoSped(const oRegistro: TRegistro): TObjectList;
 var
    lI010s  : TObjectList;
    lI010   : TI010;
+   lIndicadorOperacoes : TIndicadorOperacoes;
 begin
    lI010s := TObjectList.create;
    SetaDataBase(oRegistro);
@@ -108,11 +109,14 @@ begin
    try
        Qry.Open;
        if (not Qry.IsEmpty) then begin
+          lIndicadorOperacoes     :=    TIndicadorOperacoes.create;
           Qry.First;
           while (not Qry.Eof ) do begin
              lI010 := TI010.Create;
              lI010.ID                     := Qry.FieldByName('ID').AsInteger;
-             lI010.IndicadorOperacoes.ID  := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
+             lIndicadorOperacoes.ID       := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
+             lI010.IndicadorOperacoes     := lIndicadorOperacoes;
+             //aqui
              lI010.Sped                   := TI010(oRegistro).SPED ;
              lI010s.Add(lI010);
              Qry.Next;

@@ -54,8 +54,8 @@ var
 begin
    lI010BD := TI010BD.Create;
    result := lI010BD.getTodosDoSped(self);
-   lI010BD.Free;
-   lI010BD := nil;
+//   lI010BD.Free;
+//   lI010BD := nil;
 end;
 
 function TI010.inserir: Boolean;
@@ -80,7 +80,8 @@ end;
 
 procedure TI010.SetIndicadorOperacoes(const Value: TIndicadorOperacoes);
 begin
-  fIndicadorOperacoes := Value;
+  fIndicadorOperacoes := Value ;
+  fIndicadorOperacoes.Procurar ;
 end;
 
 procedure TI010.SetOnModeloMudou(const Value: TModeloMudou);

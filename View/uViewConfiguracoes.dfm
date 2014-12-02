@@ -105,9 +105,16 @@ object ViewConfiguracoes: TViewConfiguracoes
       object sgI010: TStringGrid
         Left = 16
         Top = 40
-        Width = 865
+        Width = 860
         Height = 120
+        ColCount = 1
+        Ctl3D = False
+        FixedCols = 0
+        FixedRows = 0
+        ParentCtl3D = False
         TabOrder = 0
+        ColWidths = (
+          432)
       end
     end
     object PBlocoI100: TPanel

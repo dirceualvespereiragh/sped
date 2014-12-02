@@ -104,7 +104,6 @@ var
 begin
    SetaDataBase(oRegistro);
    lSpeds := TObjectList.create;
-   SetaDataBase(oRegistro);
    Qry.SQL.Clear;
 
    Qry.SQL.Add( '    SELECT ID , EMPRESA FROM  SPED              '    );
