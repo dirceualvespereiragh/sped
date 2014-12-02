@@ -102,6 +102,12 @@ object ViewConfiguracoes: TViewConfiguracoes
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object lSpedID: TLabel
+        Left = 97
+        Top = 5
+        Width = 3
+        Height = 13
+      end
       object sgI010: TStringGrid
         Left = 16
         Top = 40
@@ -110,11 +116,11 @@ object ViewConfiguracoes: TViewConfiguracoes
         ColCount = 1
         Ctl3D = False
         FixedCols = 0
-        FixedRows = 0
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
         ParentCtl3D = False
         TabOrder = 0
         ColWidths = (
-          432)
+          834)
       end
     end
     object PBlocoI100: TPanel

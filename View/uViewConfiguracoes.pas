@@ -35,6 +35,7 @@ type
     Label3: TLabel;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
+    lSpedID: TLabel;
     procedure bPesquisarClick(Sender: TObject);
     procedure sbIncluiI010Click(Sender: TObject);
   private

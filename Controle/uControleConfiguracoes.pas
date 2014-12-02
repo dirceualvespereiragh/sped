@@ -100,11 +100,15 @@ begin
    lSpeds := TobjectList.create;
    lSpeds := fModeloSped.TodosDaEmpresa;
    LimpaStringGrid(fView.sgI010);
+   // Teremos sempre somente um objeto SPED embora a arquitetura permita uma lista
    if ( Assigned(lSpeds)) then begin
       lI010 := TobjectList.create ;
       I := 0;
       lI010 :=  TSped(lSpeds[0]).I010s ;
+      fView.lSpedID.Caption := 'Sped ID ' +   inttostr( TSped(lSpeds[0]).ID);
+      fModeloSped.ID :=  TSped(lSpeds[0]).ID;
       if ( Assigned(lI010)) then begin
+         fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
          while (I < ( lI010.Count) ) do begin
             fView.sgI010.Cells[0,1+I] :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
             inc(I);
@@ -157,9 +161,10 @@ begin
    if (not  Assigned(fModeloSped.Procurar() ) )then begin
       fModeloSped.inserir();
    end;
-   fModeloI010.Sped := fModeloSped.ID;
    fModeloI010.Inserir();
+
 end;
+
 
 procedure TControle.MontaTelaIncluiI010;
 begin

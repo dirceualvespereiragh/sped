@@ -54,6 +54,7 @@ end;
 procedure TViewInclusao.btSalvarClick(Sender: TObject);
 begin
    Salvar;
+   Close;
 end;
 
 procedure TViewInclusao.SetSalvar(const Value: TListaEvent);
