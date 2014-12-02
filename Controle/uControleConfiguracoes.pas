@@ -24,6 +24,7 @@ type
       procedure Initialize;
       procedure ListaEmpresas;
       procedure ListaSped;
+      procedure ListaI100;
       procedure TelaIncluiI010;
       procedure  Salvar;
       procedure CopiaObjectList(lObjectList : TObjectList;lComboBox : TComboBox; lClasse : TClass);
@@ -61,8 +62,10 @@ end;
 procedure TControle.Initialize;
 begin
    FView.Modelo            := fModelo;
+   fView.ModeloI010        := fModeloI010;
    fModelo.OnModeloMudou   := FView.ModeloMudou;
    FView.DoLista           := ListaSped;
+   FView.DoListaI100       := ListaI100;
    fView.IncluiI010        := TelaIncluiI010;
    ListaEmpresas;
    FView.Initialize;
@@ -110,7 +113,9 @@ begin
       if ( Assigned(lI010)) then begin
          fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
          while (I < ( lI010.Count) ) do begin
-            fView.sgI010.Cells[0,1+I] :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI010.Cells[0,1+I]   :=                inttostr(TI010(lI010[I]).ID); // TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI010.Objects[0,1+I] :=   TI010(lI010[I]);
+
             inc(I);
          END;
       end;
@@ -192,6 +197,14 @@ begin
    fcbIdentificadorOperacao.Top    := 52;
    fcbIdentificadorOperacao.Width  := 470;
 
+end;
+
+procedure TControle.ListaI100;
+var
+   IndiceSelecionado : integer;
+   lSpeds            : TObjectList;
+begin
+   fView.sgI100.Cells[0,1] :=  inttostr(fModeloI010.IndicadorOperacoes.ID );
 end;
 
 end.

@@ -119,6 +119,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
         ParentCtl3D = False
         TabOrder = 0
+        OnSelectCell = sgI010SelectCell
         ColWidths = (
           834)
       end
@@ -137,7 +138,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Height = 13
         Caption = 'Bloco I100'
       end
-      object SpeedButton3: TSpeedButton
+      object sbIncluirI100: TSpeedButton
         Left = 648
         Top = 8
         Width = 23
@@ -150,7 +151,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object SpeedButton4: TSpeedButton
+      object sbExcluirI100: TSpeedButton
         Left = 688
         Top = 8
         Width = 23
@@ -163,12 +164,19 @@ object ViewConfiguracoes: TViewConfiguracoes
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object StringGrid2: TStringGrid
-        Left = 16
-        Top = 64
-        Width = 865
-        Height = 120
+      object sgI100: TStringGrid
+        Left = 8
+        Top = 40
+        Width = 889
+        Height = 144
+        FixedCols = 0
         TabOrder = 0
+        ColWidths = (
+          339
+          175
+          100
+          108
+          144)
       end
     end
   end
