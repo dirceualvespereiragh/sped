@@ -111,7 +111,7 @@ object ViewConfiguracoes: TViewConfiguracoes
       object sgI010: TStringGrid
         Left = 16
         Top = 40
-        Width = 860
+        Width = 873
         Height = 120
         ColCount = 1
         Ctl3D = False
@@ -119,6 +119,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
         ParentCtl3D = False
         TabOrder = 0
+        OnClick = sgI010Click
         OnSelectCell = sgI010SelectCell
         ColWidths = (
           834)

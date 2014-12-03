@@ -105,17 +105,16 @@ begin
    LimpaStringGrid(fView.sgI010);
    // Teremos sempre somente um objeto SPED embora a arquitetura permita uma lista
    if ( Assigned(lSpeds)) then begin
-      lI010 := TobjectList.create ;
-      I := 0;
-      lI010 :=  TSped(lSpeds[0]).I010s ;
       fView.lSpedID.Caption := 'Sped ID ' +   inttostr( TSped(lSpeds[0]).ID);
-      fModeloSped.ID :=  TSped(lSpeds[0]).ID;
+      fModeloSped.ID        :=  TSped(lSpeds[0]).ID;
+      lI010 := TobjectList.create ;
+      I     := 0;
+      lI010 := TSped(lSpeds[0]).I010s ;
       if ( Assigned(lI010)) then begin
          fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
          while (I < ( lI010.Count) ) do begin
-            fView.sgI010.Cells[0,1+I]   :=                inttostr(TI010(lI010[I]).ID); // TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
             fView.sgI010.Objects[0,1+I] :=   TI010(lI010[I]);
-
             inc(I);
          END;
       end;
@@ -201,10 +200,56 @@ end;
 
 procedure TControle.ListaI100;
 var
-   IndiceSelecionado : integer;
-   lSpeds            : TObjectList;
+   I                 : Integer;
+   lI100s            : TObjectList;
 begin
-   fView.sgI100.Cells[0,1] :=  inttostr(fModeloI010.IndicadorOperacoes.ID );
+   FModeloI010 :=  TI010( fView.sgI010.Objects [0,fView.fLinhaSg010] );
+   lI100s      := TobjectList.create;
+   LimpaStringGrid(fView.sgI100);
+   if ( Assigned(lI100s)) then begin
+         fView.sgI100.Cells[0,0] := ' C.S. ';
+         I := 0;
+         while (I < ( lI100s.Count) ) do begin
+            fView.sgI100.Cells[0,1+I]   :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI100.Objects[0,1+I] :=   TI010(lI010[I]);
+            estou olhando o código abaixo e copiando aqui
+               fView.sgI100.Cells[0,1] :=  inttostr(fModeloI010.IndicadorOperacoes.ID );
+            inc(I);
+         END;
+
+   end;
+
 end;
 
 end.
+
+
+var
+   lSpeds, lI010 : TObjectList;
+   I      : Integer;
+begin
+   fModeloSped.Empresa.ID :=  ( TEmpresa( fView.cbEmpresa.Items.Objects[fView.cbEmpresa.ItemIndex]).ID);
+   lSpeds := TobjectList.create;
+   lSpeds := fModeloSped.TodosDaEmpresa;
+   LimpaStringGrid(fView.sgI010);
+   // Teremos sempre somente um objeto SPED embora a arquitetura permita uma lista
+   if ( Assigned(lSpeds)) then begin
+      fView.lSpedID.Caption := 'Sped ID ' +   inttostr( TSped(lSpeds[0]).ID);
+      fModeloSped.ID        :=  TSped(lSpeds[0]).ID;
+      lI010 := TobjectList.create ;
+      I     := 0;
+      lI010 := TSped(lSpeds[0]).I010s ;
+      if ( Assigned(lI010)) then begin
+         fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
+         while (I < ( lI010.Count) ) do begin
+            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI010.Objects[0,1+I] :=   TI010(lI010[I]);
+            inc(I);
+         END;
+      end;
+      lI010.Free;
+      lI010 := nil;
+   End;
+   lSpeds.free;
+   lSpeds := nil;
+end;

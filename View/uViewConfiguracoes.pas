@@ -7,7 +7,7 @@ uses
   Dialogs, ExtCtrls, StdCtrls, Grids, Buttons,
 
   MVCInterfaces, uEmpresa, USped, UI010;
-// A View conhece o Modelo pois exibe os atributos dele
+// A View somente conhece o Modelo para exibir os atributos dele mas não pode alterar ou interagir com o Modelo 
 
 type
 
@@ -38,8 +38,8 @@ type
     lSpedID: TLabel;
     procedure bPesquisarClick(Sender: TObject);
     procedure sbIncluiI010Click(Sender: TObject);
-    procedure sgI010SelectCell(Sender: TObject; ACol, ARow: Integer;
-      var CanSelect: Boolean);
+    procedure sgI010SelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
+    procedure sgI010Click(Sender: TObject);
   private
      FModelo  : TEmpresa;
      FModeloI010 : TI010;
@@ -50,8 +50,9 @@ type
      procedure SetDoLista(const Value: TListaEvent);
      procedure SetIncluiI010(const Value: TListaEvent);
      procedure SetDoListaI100(const Value: TListaEvent);
-    procedure SetModeloI010(const Value: TI010);
+     procedure SetModeloI010(const Value: TI010);
   public
+     fLinhaSg010 : Integer;
      procedure Initialize;
      procedure ModeloMudou;
      property Modelo      : TEmpresa     read FModelo       write SetModel;
@@ -114,14 +115,17 @@ end;
 procedure TViewConfiguracoes.sgI010SelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
-   FModeloI010 :=  TI010( sgI010.Objects [0,ARow] );
-   Label1.Caption := inttostr(FModeloI010.ID);
-   DoListaI100;
+   fLinhaSg010 := ARow;
 end;
 
 procedure TViewConfiguracoes.SetModeloI010(const Value: TI010);
 begin
   fModeloI010 := Value;
+end;
+
+procedure TViewConfiguracoes.sgI010Click(Sender: TObject);
+begin
+   DoListaI100;
 end;
 
 end.
