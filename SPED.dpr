@@ -3,7 +3,7 @@ program SPED;
 uses
   Forms,
   uPrincipal in 'uPrincipal.pas' {frmSped},
-  uI010BD in 'DAO\uI010BD.pas',
+  uI100BD in 'DAO\uI100BD.pas',
   uExcecao in '..\comum\Geral\uExcecao.pas';
 
 {$R *.res}

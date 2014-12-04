@@ -7,7 +7,7 @@ interface
 uses
    Contnrs,  StdCtrls      , SysUtils   , Grids,
 
-   MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped, uIndicadorOperacoes,uRegistro,UI010;
+   MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped, uIndicadorOperacoes,uRegistro,UI010, UI100;
 
 type
    TControle = class(TInterfacedObject, IControle)
@@ -203,6 +203,8 @@ var
    I                 : Integer;
    lI100s            : TObjectList;
 begin
+   // fView.fLinhaSg010 é uma variável na VIEW para passar
+   // a linha selecionada não sei se é correto mas não consegui implementar de outra maneira
    FModeloI010 :=  TI010( fView.sgI010.Objects [0,fView.fLinhaSg010] );
    lI100s      := TobjectList.create;
    LimpaStringGrid(fView.sgI100);
@@ -210,7 +212,7 @@ begin
          fView.sgI100.Cells[0,0] := ' C.S. ';
          I := 0;
          while (I < ( lI100s.Count) ) do begin
-            fView.sgI100.Cells[0,1+I]   :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
+            fView.sgI100.Cells[0,1+I]   :=   TI100(lI100s[I]).
             fView.sgI100.Objects[0,1+I] :=   TI010(lI010[I]);
             estou olhando o código abaixo e copiando aqui
                fView.sgI100.Cells[0,1] :=  inttostr(fModeloI010.IndicadorOperacoes.ID );
