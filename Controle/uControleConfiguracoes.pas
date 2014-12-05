@@ -118,6 +118,7 @@ begin
          while (I < ( lI010s.Count) ) do begin
             fView.sgI010.Cells[0,1+I]   :=   TI010(lI010s[I]).IndicadorOperacoes.Descricao + inttostr(TI010(lI010s[I]).Empresa.ID) ;
             fView.sgI010.Objects[0,1+I] :=   TI010(lI010s[I]);
+            fView.sgI010.Cells[1,1+I]   :=  inttostr( TI010( fView.sgI010.Objects[0,1+I] ).Empresa.id );
             inc(I);
          END;
       end;
@@ -209,8 +210,10 @@ begin
    // fView.fLinhaSg010 é uma variável na VIEW para passar
    // a linha selecionada não sei se é correto mas não consegui implementar de outra maneira
        fView.Label2.Caption := inttostr( fModeloI010.Empresa.ID);
+
    FModeloI010 :=  TI010( fView.sgI010.Objects [0,fView.fLinhaSg010] );
-    fView.Label1.Caption := inttostr(  fModeloI010.ID);
+    fView.Label1.Caption := inttostr( TI010( fView.sgI010.Objects[0,fView.fLinhaSg010] ).Empresa.id );
+
 //    aqui
 //   lI100s      := TobjectList.create;
 //   LimpaStringGrid(fView.sgI100);
