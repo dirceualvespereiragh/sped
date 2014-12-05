@@ -27,7 +27,7 @@ type
          property ID                   : Integer                read fID                    write SetID;
          property IndicadorOperacoes   : TIndicadorOperacoes    read fIndicadorOperacoes    write SetIndicadorOperacoes;
          property I100                 : TObjectList            read fI100                  write SetI100;
-         property Sped                 : integer                  read fSped                  write fSped;
+         property Sped                 : integer                read fSped                  write fSped;
          //property OnModeloMudou: TModeloMudou read GetOnModeloMudou write SetOnModeloMudou; // Precisa ver se assim funciona em versões mais novas de Delphi
          property OnModeloMudou: TModeloMudou read FOnModeloMudou write SetOnModeloMudou;      // Assim funcionou em Delphi 7
          function getTodosDoSped : TObjectList;         
@@ -44,7 +44,7 @@ uses uI010BD, UEmpresa;
 
 constructor TI010.create;
 begin
-   Empresa            := TEmpresa.create;
+   Empresa            :=  TEmpresa.create;
    IndicadorOperacoes :=  TIndicadorOperacoes.create;
 end;
 

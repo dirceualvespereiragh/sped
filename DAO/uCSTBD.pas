@@ -24,25 +24,25 @@ implementation
 uses
    uCST;
 
-function TEmpresaBD.Alterar(const oRegistro: TRegistro): Boolean;
+function TCSTBD.Alterar(const oRegistro: TRegistro): Boolean;
 begin
 
 end;
 
-function TEmpresaBD.Deletar(const oRegistro: TRegistro): Boolean;
+function TCSTBD.Deletar(const oRegistro: TRegistro): Boolean;
 begin
 
 end;
 
-function TEmpresaBD.Inserir(const oRegistro: TRegistro): Boolean;
+function TCSTBD.Inserir(const oRegistro: TRegistro): Boolean;
 begin
 end;
 
-function TEmpresaBD.Procurar(const oRegistro: TRegistro): TRegistro;
+function TCSTBD.Procurar(const oRegistro: TRegistro): TRegistro;
 begin
 end;
 
-function TEmpresaBD.Todos(): TObjectList;
+function TCSTBD.Todos(): TObjectList;
 var
    lCST            : TCST;
    lCSTs           : TObjectList;

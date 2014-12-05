@@ -9,10 +9,10 @@ interface
 uses
    Contnrs,            //  <--  Nesta Unit está implementado TObjectList
 
-   MVCInterfaces,uRegistro,uCST;
+   MVCInterfaces,uRegistroEmpresaContabil,uCST, uI010;
 
 type
-   TI100 = class(TRegistro)
+   TI100 = class(TRegistroEmpresaContabil)
       private
          fID              : Integer;   // Toda chave primaria nossa no banco dentro do objeto vai chamar ID
          FOnModeloMudou: TModeloMudou;
@@ -24,6 +24,7 @@ type
          fAliquotaCOFINS: Real;
          fAliquotaPIS: Real;
          fCST: TCST;
+         fI010: TI010;
          procedure SetOnModeloMudou(const Value: TModeloMudou);
          procedure SetAliquotaCOFINS(const Value: Real);
          procedure SetAliquotaPIS(const Value: Real);
@@ -34,20 +35,21 @@ type
          procedure SetTotalFaturamento(const Value: Real);
          procedure SetValorCOFINS(const Value: Real);
          procedure SetValorPIS(const Value: Real);
+         procedure SetI010(const Value: TI010);
       public
-         property ID                : Integer     read fID                 write SetID;
-         property CST               : TCST        read fCST                write SetCST;
-         property TotalFaturamento  : Real        read fTotalFaturamento   write SetTotalFaturamento;
-         property AliquotaPIS       : Real        read fAliquotaPIS        write SetAliquotaPIS;
-         property BaseCalculoPIS    : Real        read fBaseCalculoPIS     write SetBaseCalculoPIS;
-         property ValorPIS          : Real        read fValorPIS           write SetValorPIS;
+         property ID                : Integer     read fID                    write SetID;
+         property I010              : TI010       read fI010                  write SetI010;
+         property CST               : TCST        read fCST                   write SetCST;
+         property TotalFaturamento  : Real        read fTotalFaturamento      write SetTotalFaturamento;
+         property AliquotaPIS       : Real        read fAliquotaPIS           write SetAliquotaPIS;
+         property BaseCalculoPIS    : Real        read fBaseCalculoPIS        write SetBaseCalculoPIS;
+         property ValorPIS          : Real        read fValorPIS              write SetValorPIS;
          property AliquotaCOFINS    : Real        read fAliquotaCOFINS        write SetAliquotaCOFINS;
          property BaseCalculoCOFINS : Real        read fBaseCalculoCOFINS     write SetBaseCalculoCOFINS;
          property ValorCOFINS       : Real        read fValorCOFINS           write SetValorCOFINS;
          //property OnModeloMudou: TModeloMudou read GetOnModeloMudou write SetOnModeloMudou; // Precisa ver se assim funciona em versões mais novas de Delphi
          property OnModeloMudou: TModeloMudou read FOnModeloMudou write SetOnModeloMudou;      // Assim funcionou em Delphi 7
-
-         function Todos : TObjectList;
+         function GetTodosdoI010 : TObjectList;
          constructor create();
    end;
 
@@ -60,8 +62,9 @@ uses
 
 constructor TI100.create;
 begin
-   fCST : TCST.create;
+   fCST := TCST.create;
 end;
+
 
 procedure TI100.SetAliquotaCOFINS(const Value: Real);
 begin
@@ -86,6 +89,11 @@ end;
 procedure TI100.SetCST(const Value: TCST);
 begin
   fCST := Value;
+end;
+
+procedure TI100.SetI010(const Value: TI010);
+begin
+  fI010 := Value;
 end;
 
 procedure TI100.SetID(const Value: Integer);
@@ -113,12 +121,12 @@ begin
   fValorPIS := Value;
 end;
 
-function TI100.Todos: TObjectList;
+function TI100.GetTodosdoI010: TObjectList;
 var
-   lEmpresaBD : TEmpresaBD;
+   lI100BD : TI100BD;
 begin
-   lEmpresaBD := TEmpresaBD.Create;
-   result := lEmpresaBD.Todos();
+   lI100BD := TI100BD.Create;
+   result := lI100BD.Todos();
 end;
 
 end.

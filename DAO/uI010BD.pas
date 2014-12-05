@@ -114,6 +114,7 @@ begin
           while (not Qry.Eof ) do begin
              lI010                   := TI010.Create;
              lIndicadorOperacoes     :=    TIndicadorOperacoes.create;
+             lI010.Empresa.ID        :=    TI010(oRegistro).Empresa.ID;
              lI010.ID                     := Qry.FieldByName('ID').AsInteger;
              lIndicadorOperacoes.ID       := Qry.FieldByName('INDICADOROPERACOES').AsInteger;
              lI010.IndicadorOperacoes     := lIndicadorOperacoes;

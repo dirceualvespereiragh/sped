@@ -119,6 +119,7 @@ begin
              lSped.Empresa.ID  := Qry.FieldByName('EMPRESA').AsInteger;
              lI010             := TI010.create;
              lI010.Sped        := lSped.ID;
+             lI010.Empresa.ID  := lSped.Empresa.ID;
              lI010s            := TObjectList.Create;
              lI010s            := lI010.getTodosDoSped;
              lSped.I010s       := lI010s;

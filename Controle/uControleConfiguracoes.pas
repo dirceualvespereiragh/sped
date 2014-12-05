@@ -18,6 +18,7 @@ type
       fModeloSped                 : TSped;
       fModeloIndicadorOperacoes   : TIndicadorOperacoes;
       fModeloI010                 : TI010;
+      fModeloI100                 : TI100;
    public
       constructor Create; reintroduce;
       destructor  Destroy; override;
@@ -26,10 +27,12 @@ type
       procedure ListaSped;
       procedure ListaI100;
       procedure TelaIncluiI010;
+      procedure TelaIncluiI100;
       procedure  Salvar;
       procedure CopiaObjectList(lObjectList : TObjectList;lComboBox : TComboBox; lClasse : TClass);
       procedure LimpaStringGrid(lStringGrid : TStringGrid);
       procedure MontaTelaIncluiI010;
+      procedure MontaTelaIncluiI100;
       Procedure MontaCamposTelaIncluiI010(var fcbIdentificadorOperacao : TComboBox;   flIdentificadorOperacao  : TLabel );
    end;
 
@@ -50,6 +53,7 @@ begin
    fModelo       := TEmpresa.Create;
    fModeloSped   := TSped.create;
    fModeloI010   := TI010.create;
+   fModeloI100   := TI100.create;
    FView         := TViewConfiguracoes.Create(nil);
 end;
 
@@ -87,7 +91,6 @@ begin
          lComboBox.AddItem(   TEmpresa( lObjectList.Items[x] ).nome , (TEmpresa(lObjectList.Items[x]) )  );
       if lClasse =  TIndicadorOperacoes then
          lComboBox.AddItem(   TIndicadorOperacoes(lObjectList.Items[x]).Descricao , (TIndicadorOperacoes(lObjectList.Items[x]) )  );
-
       inc(x);
    end;
    lComboBox.ItemIndex := 0;
@@ -96,7 +99,7 @@ end;
 
 procedure TControle.ListaSped;
 var
-   lSpeds, lI010 : TObjectList;
+   lSpeds, lI010s : TObjectList;
    I      : Integer;
 begin
    fModeloSped.Empresa.ID :=  ( TEmpresa( fView.cbEmpresa.Items.Objects[fView.cbEmpresa.ItemIndex]).ID);
@@ -107,19 +110,19 @@ begin
    if ( Assigned(lSpeds)) then begin
       fView.lSpedID.Caption := 'Sped ID ' +   inttostr( TSped(lSpeds[0]).ID);
       fModeloSped.ID        :=  TSped(lSpeds[0]).ID;
-      lI010 := TobjectList.create ;
-      I     := 0;
-      lI010 := TSped(lSpeds[0]).I010s ;
-      if ( Assigned(lI010)) then begin
+      lI010s := TobjectList.create ;
+      I      := 0;
+      lI010s := TSped(lSpeds[0]).I010s ;
+      if ( Assigned(lI010s)) then begin
          fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
-         while (I < ( lI010.Count) ) do begin
-            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
-            fView.sgI010.Objects[0,1+I] :=   TI010(lI010[I]);
+         while (I < ( lI010s.Count) ) do begin
+            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010s[I]).IndicadorOperacoes.Descricao + inttostr(TI010(lI010s[I]).Empresa.ID) ;
+            fView.sgI010.Objects[0,1+I] :=   TI010(lI010s[I]);
             inc(I);
          END;
       end;
-      lI010.Free;
-      lI010 := nil;
+      lI010s.Free;
+      lI010s := nil;
    End;
    lSpeds.free;
    lSpeds := nil;
@@ -205,53 +208,54 @@ var
 begin
    // fView.fLinhaSg010 é uma variável na VIEW para passar
    // a linha selecionada não sei se é correto mas não consegui implementar de outra maneira
+       fView.Label2.Caption := inttostr( fModeloI010.Empresa.ID);
    FModeloI010 :=  TI010( fView.sgI010.Objects [0,fView.fLinhaSg010] );
-   lI100s      := TobjectList.create;
-   LimpaStringGrid(fView.sgI100);
-   if ( Assigned(lI100s)) then begin
-         fView.sgI100.Cells[0,0] := ' C.S. ';
-         I := 0;
-         while (I < ( lI100s.Count) ) do begin
-            fView.sgI100.Cells[0,1+I]   :=   TI100(lI100s[I]).
-            fView.sgI100.Objects[0,1+I] :=   TI010(lI010[I]);
-            estou olhando o código abaixo e copiando aqui
-               fView.sgI100.Cells[0,1] :=  inttostr(fModeloI010.IndicadorOperacoes.ID );
-            inc(I);
-         END;
+    fView.Label1.Caption := inttostr(  fModeloI010.ID);
+//    aqui
+//   lI100s      := TobjectList.create;
+//   LimpaStringGrid(fView.sgI100);
+//   if ( Assigned(lI100s)) then begin
+//         fView.sgI100.Cells[0,0] := ' C.S. ';
+//         I := 0;
+//         while (I < ( lI100s.Count) ) do begin
+//            fView.sgI100.Cells[0,1+I]   :=   TI100(lI100s[I]).CST.Descricao;
+//            fView.sgI100.Objects[0,1+I] :=   TI100(lI100s[I]);
+//            inc(I);
+//         END;
+//   end;
+end;
 
-   end;
+procedure TControle.TelaIncluiI100;
+var
+   cbCST                   : TComboBox;
+   lCST                    : TLabel;
+   lCSTs                   : TObjectList;
+begin
+   fModeloI100.Empresa.ID :=  fModeloSped.Empresa.ID;
+   MontaTelaIncluiI100;
+//   MontaCamposTelaIncluiI010(cbIdentificadorOperacao,lIdentificadorOperacao);
+//   fModeloIndicadorOperacoes := TIndicadorOperacoes.create;
+//   lIndicadorOperacoes :=  TObjectlist.create;
+//   lIndicadorOperacoes :=  fModeloIndicadorOperacoes.Todos;
+//   cbIdentificadorOperacao.Clear;
+//   CopiaObjectList(lIndicadorOperacoes,cbIdentificadorOperacao,TIndicadorOperacoes );
+   fViewInclusao.ShowModal;
+   fViewInclusao.Free  ;
+   fViewInclusao := nil;
+end;
 
+procedure TControle.MontaTelaIncluiI100;
+begin
+   fViewInclusao := TViewInclusao.Create(nil);
+   fViewInclusao.Initialize;
+   fViewInclusao.Salvar    := Salvar;
+   fViewInclusao.Height := 270;
+   fViewInclusao.reTitulo.Clear;
+   fViewInclusao.reTitulo.Lines.Add('Registro I100');
+   fViewInclusao.reTitulo.Lines.Add('I100 - Consolidação das Operações no Período');
 end;
 
 end.
 
 
-var
-   lSpeds, lI010 : TObjectList;
-   I      : Integer;
-begin
-   fModeloSped.Empresa.ID :=  ( TEmpresa( fView.cbEmpresa.Items.Objects[fView.cbEmpresa.ItemIndex]).ID);
-   lSpeds := TobjectList.create;
-   lSpeds := fModeloSped.TodosDaEmpresa;
-   LimpaStringGrid(fView.sgI010);
-   // Teremos sempre somente um objeto SPED embora a arquitetura permita uma lista
-   if ( Assigned(lSpeds)) then begin
-      fView.lSpedID.Caption := 'Sped ID ' +   inttostr( TSped(lSpeds[0]).ID);
-      fModeloSped.ID        :=  TSped(lSpeds[0]).ID;
-      lI010 := TobjectList.create ;
-      I     := 0;
-      lI010 := TSped(lSpeds[0]).I010s ;
-      if ( Assigned(lI010)) then begin
-         fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
-         while (I < ( lI010.Count) ) do begin
-            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010[I]).IndicadorOperacoes.Descricao;
-            fView.sgI010.Objects[0,1+I] :=   TI010(lI010[I]);
-            inc(I);
-         END;
-      end;
-      lI010.Free;
-      lI010 := nil;
-   End;
-   lSpeds.free;
-   lSpeds := nil;
-end;
+
