@@ -257,23 +257,51 @@ begin
    fViewInclusao.Height := 270;
    fViewInclusao.reTitulo.Clear;
    fViewInclusao.reTitulo.Lines.Add('Registro I100');
-   fViewInclusao.reTitulo.Lines.Add('I100 - Consolidação das Operações no Período');
+   fViewInclusao.reTitulo.Lines.Add('I100 - Consolidação das Operações do Período');
 end;
 
 Procedure TControle.MontaCamposTelaIncluiI100(var fcbCST : TComboBox;   flCST  : TLabel );
+var
+  flAliquotaPIS       : Tlabel;
+  flAliquotaCOFINS    : Tlabel;
+  feditAliquotaPIS    : TEdit;
+  feditAliquotaCOFINS : TEdit;
 begin
    flCST := Tlabel.Create (fViewInclusao);
    flCST.Parent :=  fViewInclusao.Panel3;
-   flCST.Left   := 40;
-   flCST.Top    := 55;
-   flCST.Caption :=  'C.... S.... T.....';
+   flCST.Left   := 32;
+   flCST.Top    := 30;
+   flCST.Caption :=  'Código de Situação Tributária';
    fcbCST := TComboBox.Create(fViewInclusao);
    fcbCST.Name   := 'cbCST';
    fcbCST.Parent := fViewInclusao.Panel3;
-   fcbCST.Left   := 288;
-   fcbCST.Top    := 52;
+   fcbCST.Left   := 184;
+   fcbCST.Top    := 24;
    fcbCST.Width  := 470;
 
+   flAliquotaPIS         := Tlabel.Create (fViewInclusao);
+   flAliquotaPIS.Parent  := fViewInclusao.Panel3;
+   flAliquotaPIS.Left    := 32;
+   flAliquotaPIS.Top     := 80;
+   flAliquotaPIS.Caption := 'Alíquota do PIS/PASEP (em percentual)';
+
+   feditAliquotaPIS        := Tedit.Create(fViewInclusao);
+   feditAliquotaPIS.Parent := fViewInclusao.Panel3;
+   feditAliquotaPIS.Left   := 235;
+   feditAliquotaPIS.Top    := 75;
+   feditAliquotaPIS.Width  := 90;
+
+   flAliquotaCOFINS :=   Tlabel.Create (fViewInclusao);
+   flAliquotaCOFINS.Parent := fViewInclusao.Panel3;
+   flAliquotaCOFINS.Left   := 344;
+   flAliquotaCOFINS.Top    := 80;
+   flAliquotaCOFINS.Caption := 'Alíquota da COFINS (em percentual)';
+
+   feditAliquotaCOFINS        := Tedit.Create(fViewInclusao);
+   feditAliquotaCOFINS.Parent := fViewInclusao.Panel3;
+   feditAliquotaCOFINS.Left   := 530;
+   feditAliquotaCOFINS.Top    := 75;
+   feditAliquotaCOFINS.Width  := 90;
 end;
 
 
