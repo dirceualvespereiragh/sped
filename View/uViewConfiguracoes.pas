@@ -40,17 +40,20 @@ type
     procedure sbIncluiI010Click(Sender: TObject);
     procedure sgI010SelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure sgI010Click(Sender: TObject);
+    procedure sbIncluirI100Click(Sender: TObject);
   private
      FModelo  : TEmpresa;
      FModeloI010 : TI010;
      FDoLista : TListaEvent;
      FIncluiI010: TListaEvent;
      FDoListaI100: TListaEvent;
+     FIncluiI100: TListaEvent;
      procedure SetModel(const Value: TEmpresa);
      procedure SetDoLista(const Value: TListaEvent);
      procedure SetIncluiI010(const Value: TListaEvent);
      procedure SetDoListaI100(const Value: TListaEvent);
      procedure SetModeloI010(const Value: TI010);
+    procedure SetIncluiI100(const Value: TListaEvent);
   public
      fLinhaSg010 : Integer;
      procedure Initialize;
@@ -60,6 +63,7 @@ type
      property DoLista     : TListaEvent  read FDoLista      write SetDoLista;
      property IncluiI010  : TListaEvent  read FIncluiI010   write SetIncluiI010;
      property DoListaI100 : TListaEvent  read FDoListaI100  write SetDoListaI100;
+     property IncluiI100  : TListaEvent  read FIncluiI100   write SetIncluiI100;
   end;
 
 //var           // Programador bom comenta estas linha, como eu comentei logo...
@@ -126,6 +130,16 @@ end;
 procedure TViewConfiguracoes.sgI010Click(Sender: TObject);
 begin
    DoListaI100;
+end;
+
+procedure TViewConfiguracoes.sbIncluirI100Click(Sender: TObject);
+begin
+   IncluiI100;
+end;
+
+procedure TViewConfiguracoes.SetIncluiI100(const Value: TListaEvent);
+begin
+  FIncluiI100 := Value;
 end;
 
 end.

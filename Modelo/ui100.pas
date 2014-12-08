@@ -56,12 +56,13 @@ type
 implementation
 
 uses
-   UI100BD;
+   UI100BD, UEmpresa;
 
 
 
 constructor TI100.create;
 begin
+   Empresa            :=  TEmpresa.create;
    fCST := TCST.create;
 end;
 

@@ -3,6 +3,8 @@ unit uCST;
 interface
 
 uses
+   Contnrs,
+
    uRegistro;
 
 type
@@ -19,11 +21,15 @@ type
          property ID             : Integer     read fID          write SetID;
          property Descricao      : String      read fDescricao   write SetDescricao;
          property Codigo         : String      read fCodigo      write SetCodigo;
+         function Todos : TObjectList;
          constructor create();
    end;
 
    
 implementation
+
+uses
+   UCSTBD;
 
 
 
@@ -47,6 +53,14 @@ end;
 procedure TCST.SetID(const Value: Integer);
 begin
   fID := Value;
+end;
+
+function TCST.Todos: TObjectList;
+var
+   lCSTBD : TCSTBD;
+begin
+   lCSTBD := TCSTBD.Create;
+   result := lCSTBD.Todos();
 end;
 
 end.

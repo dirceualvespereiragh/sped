@@ -7,7 +7,7 @@ interface
 uses
    Contnrs,  StdCtrls      , SysUtils   , Grids,
 
-   MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped, uIndicadorOperacoes,uRegistro,UI010, UI100;
+   MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped, uIndicadorOperacoes,uRegistro,UI010, UI100, UCST;
 
 type
    TControle = class(TInterfacedObject, IControle)
@@ -19,6 +19,7 @@ type
       fModeloIndicadorOperacoes   : TIndicadorOperacoes;
       fModeloI010                 : TI010;
       fModeloI100                 : TI100;
+      fModeloCST                  : TCST;
    public
       constructor Create; reintroduce;
       destructor  Destroy; override;
@@ -34,6 +35,7 @@ type
       procedure MontaTelaIncluiI010;
       procedure MontaTelaIncluiI100;
       Procedure MontaCamposTelaIncluiI010(var fcbIdentificadorOperacao : TComboBox;   flIdentificadorOperacao  : TLabel );
+      Procedure MontaCamposTelaIncluiI100(var fcbCST : TComboBox;   flCST  : TLabel );
    end;
 
 implementation
@@ -71,6 +73,7 @@ begin
    FView.DoLista           := ListaSped;
    FView.DoListaI100       := ListaI100;
    fView.IncluiI010        := TelaIncluiI010;
+   fView.IncluiI100        := TelaIncluiI100;
    ListaEmpresas;
    FView.Initialize;
    FView.ShowModal;
@@ -91,6 +94,8 @@ begin
          lComboBox.AddItem(   TEmpresa( lObjectList.Items[x] ).nome , (TEmpresa(lObjectList.Items[x]) )  );
       if lClasse =  TIndicadorOperacoes then
          lComboBox.AddItem(   TIndicadorOperacoes(lObjectList.Items[x]).Descricao , (TIndicadorOperacoes(lObjectList.Items[x]) )  );
+      if lClasse = TCST then
+         lComboBox.AddItem(   TCST(lObjectList.Items[x]).Descricao , (TCST(lObjectList.Items[x]) )  );
       inc(x);
    end;
    lComboBox.ItemIndex := 0;
@@ -116,14 +121,13 @@ begin
       if ( Assigned(lI010s)) then begin
          fView.sgI010.Cells[0,0] := ' Indicador de Operações ';
          while (I < ( lI010s.Count) ) do begin
-            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010s[I]).IndicadorOperacoes.Descricao + inttostr(TI010(lI010s[I]).Empresa.ID) ;
+            fView.sgI010.Cells[0,1+I]   :=   TI010(lI010s[I]).IndicadorOperacoes.Descricao  ;
             fView.sgI010.Objects[0,1+I] :=   TI010(lI010s[I]);
-            fView.sgI010.Cells[1,1+I]   :=  inttostr( TI010( fView.sgI010.Objects[0,1+I] ).Empresa.id );
             inc(I);
          END;
       end;
-      lI010s.Free;
-      lI010s := nil;
+     // lI010s.Free;
+     // lI010s := nil;
    End;
    lSpeds.free;
    lSpeds := nil;
@@ -202,6 +206,8 @@ begin
 
 end;
 
+
+
 procedure TControle.ListaI100;
 var
    I                 : Integer;
@@ -209,23 +215,19 @@ var
 begin
    // fView.fLinhaSg010 é uma variável na VIEW para passar
    // a linha selecionada não sei se é correto mas não consegui implementar de outra maneira
-       fView.Label2.Caption := inttostr( fModeloI010.Empresa.ID);
-
    FModeloI010 :=  TI010( fView.sgI010.Objects [0,fView.fLinhaSg010] );
-    fView.Label1.Caption := inttostr( TI010( fView.sgI010.Objects[0,fView.fLinhaSg010] ).Empresa.id );
-
-//    aqui
-//   lI100s      := TobjectList.create;
-//   LimpaStringGrid(fView.sgI100);
-//   if ( Assigned(lI100s)) then begin
-//         fView.sgI100.Cells[0,0] := ' C.S. ';
-//         I := 0;
-//         while (I < ( lI100s.Count) ) do begin
-//            fView.sgI100.Cells[0,1+I]   :=   TI100(lI100s[I]).CST.Descricao;
-//            fView.sgI100.Objects[0,1+I] :=   TI100(lI100s[I]);
-//            inc(I);
-//         END;
-//   end;
+   fView.Label1.Caption := inttostr( TI010( fView.sgI010.Objects[0,fView.fLinhaSg010] ).Empresa.id );
+   lI100s      := TobjectList.create;
+   LimpaStringGrid(fView.sgI100);
+   if ( Assigned(lI100s)) then begin
+      fView.sgI100.Cells[0,0] := ' C.S. ';
+      I := 0;
+      while (I < ( lI100s.Count) ) do begin
+         fView.sgI100.Cells[0,1+I]   :=   TI100(lI100s[I]).CST.Descricao;
+         fView.sgI100.Objects[0,1+I] :=   TI100(lI100s[I]);
+         inc(I);
+      end;
+   end;
 end;
 
 procedure TControle.TelaIncluiI100;
@@ -236,12 +238,12 @@ var
 begin
    fModeloI100.Empresa.ID :=  fModeloSped.Empresa.ID;
    MontaTelaIncluiI100;
-//   MontaCamposTelaIncluiI010(cbIdentificadorOperacao,lIdentificadorOperacao);
-//   fModeloIndicadorOperacoes := TIndicadorOperacoes.create;
-//   lIndicadorOperacoes :=  TObjectlist.create;
-//   lIndicadorOperacoes :=  fModeloIndicadorOperacoes.Todos;
-//   cbIdentificadorOperacao.Clear;
-//   CopiaObjectList(lIndicadorOperacoes,cbIdentificadorOperacao,TIndicadorOperacoes );
+   MontaCamposTelaIncluiI100(cbCST,lCST);
+   fModeloCST  := TCST.create;
+   lCSTs :=  TObjectlist.create;
+   lCSTs :=  fModeloCST.Todos;
+   cbCST.Clear;
+   CopiaObjectList(lCSTs,cbCST,TCST );
    fViewInclusao.ShowModal;
    fViewInclusao.Free  ;
    fViewInclusao := nil;
@@ -257,6 +259,23 @@ begin
    fViewInclusao.reTitulo.Lines.Add('Registro I100');
    fViewInclusao.reTitulo.Lines.Add('I100 - Consolidação das Operações no Período');
 end;
+
+Procedure TControle.MontaCamposTelaIncluiI100(var fcbCST : TComboBox;   flCST  : TLabel );
+begin
+   flCST := Tlabel.Create (fViewInclusao);
+   flCST.Parent :=  fViewInclusao.Panel3;
+   flCST.Left   := 40;
+   flCST.Top    := 55;
+   flCST.Caption :=  'C.... S.... T.....';
+   fcbCST := TComboBox.Create(fViewInclusao);
+   fcbCST.Name   := 'cbCST';
+   fcbCST.Parent := fViewInclusao.Panel3;
+   fcbCST.Left   := 288;
+   fcbCST.Top    := 52;
+   fcbCST.Width  := 470;
+
+end;
+
 
 end.
 

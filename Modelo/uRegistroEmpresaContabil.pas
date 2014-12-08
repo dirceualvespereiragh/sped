@@ -15,8 +15,16 @@ type
     fEmpresa: Tempresa;
    public
       property Empresa : Tempresa read fEmpresa write fEmpresa;
+      constructor create();
    end;
 
 Implementation
+
+{ TRegistroEmpresaContabil }
+
+constructor TRegistroEmpresaContabil.create;
+begin
+
+end;
 
 end.

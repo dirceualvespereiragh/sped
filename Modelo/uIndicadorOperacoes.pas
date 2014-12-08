@@ -69,7 +69,6 @@ var
 begin
    lIndicadorOperacoesBD := TIndicadorOperacoesBD.Create;
    result := lIndicadorOperacoesBD.Todos();
-
 end;
 
 end.

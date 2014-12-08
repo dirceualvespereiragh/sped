@@ -99,7 +99,7 @@ begin
    lCST.Codigo    := '99';
    lCST.Descricao :=  'Outras Operações';
    lCSTs.Add(lCST);
-
+   result :=  lCSTs;
 
 end;
 

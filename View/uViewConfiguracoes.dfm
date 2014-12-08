@@ -113,7 +113,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Top = 40
         Width = 873
         Height = 120
-        ColCount = 2
+        ColCount = 1
         Ctl3D = False
         FixedCols = 0
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
@@ -122,8 +122,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         OnClick = sgI010Click
         OnSelectCell = sgI010SelectCell
         ColWidths = (
-          834
-          64)
+          841)
       end
     end
     object PBlocoI100: TPanel
@@ -152,6 +151,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
+        OnClick = sbIncluirI100Click
       end
       object sbExcluirI100: TSpeedButton
         Left = 688
