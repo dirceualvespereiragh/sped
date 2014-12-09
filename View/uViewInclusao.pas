@@ -11,7 +11,7 @@ type
   TListaEvent = procedure of object; // Aqui é uma grande sacada pois a variável abaixo
                                     // FDOLista recebe um procedimento do Controle sem na verdade
                                     // conhecer o controle
-                                    // para ententer melhor veja a inicialização
+                                    // para ententer melhor veja a inicialização  ( TControle.Initialize)
                                     // do controle
 
 
@@ -22,12 +22,6 @@ type
     Panel2: TPanel;
     reTitulo: TRichEdit;
     Panel3: TPanel;
-    Label1: TLabel;
-    ComboBox1: TComboBox;
-    Label2: TLabel;
-    Label3: TLabel;
-    Edit1: TEdit;
-    Edit2: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure btSalvarClick(Sender: TObject);
   private

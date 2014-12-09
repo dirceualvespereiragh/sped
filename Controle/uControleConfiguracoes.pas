@@ -29,7 +29,8 @@ type
       procedure ListaI100;
       procedure TelaIncluiI010;
       procedure TelaIncluiI100;
-      procedure  Salvar;
+      procedure Salvar;
+      procedure SalvarI100;
       procedure CopiaObjectList(lObjectList : TObjectList;lComboBox : TComboBox; lClasse : TClass);
       procedure LimpaStringGrid(lStringGrid : TStringGrid);
       procedure MontaTelaIncluiI010;
@@ -253,7 +254,7 @@ procedure TControle.MontaTelaIncluiI100;
 begin
    fViewInclusao := TViewInclusao.Create(nil);
    fViewInclusao.Initialize;
-   fViewInclusao.Salvar    := Salvar;
+   fViewInclusao.Salvar    := SalvarI100;
    fViewInclusao.Height := 270;
    fViewInclusao.reTitulo.Clear;
    fViewInclusao.reTitulo.Lines.Add('Registro I100');
@@ -304,6 +305,14 @@ begin
    feditAliquotaCOFINS.Width  := 90;
 end;
 
+
+procedure TControle.SalvarI100;
+var
+   I                 : integer;
+begin
+   I := fModeloI010.ID;
+   I := (I + 1);
+end;
 
 end.
 

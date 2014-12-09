@@ -14,7 +14,7 @@ type
   TListaEvent = procedure of object; // Aqui é uma grande sacada pois a variável abaixo
                                     // FDOLista recebe um procedimento do Controle sem na verdade
                                     // conhecer o controle
-                                    // para ententer melhor veja a inicialização
+                                    // para ententer melhor veja a inicialização  ( TControle.Initialize)
                                     // do controle
 
 

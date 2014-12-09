@@ -68,51 +68,5 @@ object ViewInclusao: TViewInclusao
     BorderStyle = bsSingle
     ParentBiDiMode = False
     TabOrder = 2
-    object Label1: TLabel
-      Left = 32
-      Top = 30
-      Width = 140
-      Height = 13
-      Caption = 'C'#243'digo de Situa'#231#227'o Tribut'#225'ria'
-    end
-    object Label2: TLabel
-      Left = 32
-      Top = 78
-      Width = 191
-      Height = 13
-      Caption = 'Al'#237'quota de PIS/PASEP (em percentual)'
-    end
-    object Label3: TLabel
-      Left = 344
-      Top = 80
-      Width = 173
-      Height = 13
-      Caption = 'Al'#237'quota de COFINS (em percentual)'
-    end
-    object ComboBox1: TComboBox
-      Left = 184
-      Top = 24
-      Width = 473
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 0
-      Text = 'ComboBox1'
-    end
-    object Edit1: TEdit
-      Left = 235
-      Top = 73
-      Width = 89
-      Height = 21
-      TabOrder = 1
-      Text = 'Edit1'
-    end
-    object Edit2: TEdit
-      Left = 528
-      Top = 75
-      Width = 90
-      Height = 21
-      TabOrder = 2
-      Text = 'Edit1'
-    end
   end
 end
