@@ -7,7 +7,8 @@ interface
 uses
    Contnrs,  StdCtrls      , SysUtils   , Grids,
 
-   MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped, uIndicadorOperacoes,uRegistro,UI010, UI100, UCST;
+   MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped,
+   uIndicadorOperacoes,uRegistro,UI010, UI100, UCST, uValidar,uExcecao;
 
 type
    TControle = class(TInterfacedObject, IControle)
@@ -317,16 +318,25 @@ end;
 procedure TControle.SalvarI100;
 var
    IndiceSelecionado : integer;
+   fValidar          : Tvalidar;
 begin
-   fModeloI100.I010.ID := fModeloI010.ID;
-   IndiceSelecionado   := (fViewInclusao.FindComponent('cbCST') as TComboBox).ItemIndex;
-   fModeloCST          :=  ( TCST ( (fViewInclusao.FindComponent('cbCST') as TComboBox).Items.Objects[IndiceSelecionado]));
-   fModeloI100.CST            :=  fModeloCST;
-   fModeloI100.AliquotaPIS    :=  StrToFloat (  (fViewInclusao.FindComponent('editAliquotaPIS') as TEdit).text );
-   fModeloI100.AliquotaCOFINS :=  StrToFloat (  (fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit).text );
-   fModeloI100.Inserir();
+   try
+      TValidar.CampoObrigatorio((fViewInclusao.FindComponent('editAliquotaPIS') as TEdit).text,True,'Campo Aliquota PIS obrigatório!', (fViewInclusao.FindComponent('editAliquotaPIS') as TEdit));
+      TValidar.CampoObrigatorio((fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit).text,True,'Campo Aliquota COFINS obrigatório!', (fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit));
+      TValidar.CampoExtend((fViewInclusao.FindComponent('editAliquotaPIS') as TEdit).text,True,'Erro no preenchimento do campo Aliquota PIS!', (fViewInclusao.FindComponent('editAliquotaPIS') as TEdit));
+      TValidar.CampoExtend((fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit).text,True,'Erro no preenchimento co campo Aliquota COFINS!', (fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit));
+      fModeloI100.I010.ID := fModeloI010.ID;
+      IndiceSelecionado   := (fViewInclusao.FindComponent('cbCST') as TComboBox).ItemIndex;
+      fModeloCST          :=  ( TCST ( (fViewInclusao.FindComponent('cbCST') as TComboBox).Items.Objects[IndiceSelecionado]));
+      fModeloI100.CST            :=  fModeloCST;
+      fModeloI100.AliquotaPIS    :=  StrToFloat (  (fViewInclusao.FindComponent('editAliquotaPIS') as TEdit).text );
+      fModeloI100.AliquotaCOFINS :=  StrToFloat (  (fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit).text );
+      fModeloI100.Inserir();
+   except
+      on e:TConGeralExcecao do
+          Raise
+   end;
+
 end;
 end.
-
-
 
