@@ -220,6 +220,8 @@ begin
    fView.Label1.Caption := inttostr( TI010( fView.sgI010.Objects[0,fView.fLinhaSg010] ).Empresa.id );
    lI100s      := TobjectList.create;
    LimpaStringGrid(fView.sgI100);
+   fModeloI100.I010.ID := fModeloI010.ID;
+   lI100s      :=   fModeloI100.GetTodosdoI010;
    if ( Assigned(lI100s)) then begin
       fView.sgI100.Cells[0,0] := ' C.S. ';
       I := 0;
@@ -291,6 +293,9 @@ begin
    feditAliquotaPIS.Left   := 235;
    feditAliquotaPIS.Top    := 75;
    feditAliquotaPIS.Width  := 90;
+   feditAliquotaPIS.Name   := 'editAliquotaPIS';
+   feditAliquotaPIS.text   := '';
+
 
    flAliquotaCOFINS :=   Tlabel.Create (fViewInclusao);
    flAliquotaCOFINS.Parent := fViewInclusao.Panel3;
@@ -298,22 +303,29 @@ begin
    flAliquotaCOFINS.Top    := 80;
    flAliquotaCOFINS.Caption := 'Alíquota da COFINS (em percentual)';
 
+
    feditAliquotaCOFINS        := Tedit.Create(fViewInclusao);
    feditAliquotaCOFINS.Parent := fViewInclusao.Panel3;
    feditAliquotaCOFINS.Left   := 530;
    feditAliquotaCOFINS.Top    := 75;
    feditAliquotaCOFINS.Width  := 90;
+   feditAliquotaCOFINS.Name   := 'editAliquotaCOFINS';
+   feditAliquotaCOFINS.Text   := '';
 end;
 
 
 procedure TControle.SalvarI100;
 var
-   I                 : integer;
+   IndiceSelecionado : integer;
 begin
-   I := fModeloI010.ID;
-   I := (I + 1);
+   fModeloI100.I010.ID := fModeloI010.ID;
+   IndiceSelecionado   := (fViewInclusao.FindComponent('cbCST') as TComboBox).ItemIndex;
+   fModeloCST          :=  ( TCST ( (fViewInclusao.FindComponent('cbCST') as TComboBox).Items.Objects[IndiceSelecionado]));
+   fModeloI100.CST            :=  fModeloCST;
+   fModeloI100.AliquotaPIS    :=  StrToFloat (  (fViewInclusao.FindComponent('editAliquotaPIS') as TEdit).text );
+   fModeloI100.AliquotaCOFINS :=  StrToFloat (  (fViewInclusao.FindComponent('editAliquotaCOFINS') as TEdit).text );
+   fModeloI100.Inserir();
 end;
-
 end.
 
 

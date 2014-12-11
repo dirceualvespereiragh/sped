@@ -50,6 +50,7 @@ type
          //property OnModeloMudou: TModeloMudou read GetOnModeloMudou write SetOnModeloMudou; // Precisa ver se assim funciona em versões mais novas de Delphi
          property OnModeloMudou: TModeloMudou read FOnModeloMudou write SetOnModeloMudou;      // Assim funcionou em Delphi 7
          function GetTodosdoI010 : TObjectList;
+         function inserir : boolean;
          constructor create();
    end;
 
@@ -62,8 +63,9 @@ uses
 
 constructor TI100.create;
 begin
-   Empresa            :=  TEmpresa.create;
-   fCST := TCST.create;
+   Empresa            := TEmpresa.create;
+   fCST               := TCST.create;
+   fI010              := TI010.create;
 end;
 
 
@@ -127,7 +129,17 @@ var
    lI100BD : TI100BD;
 begin
    lI100BD := TI100BD.Create;
-   result := lI100BD.Todos();
+   result := lI100BD.GetTodosdoI010(self);
+end;
+
+function TI100.inserir: boolean;
+var
+   lI100BD : TI100BD;
+begin
+   lI100BD := TI100BD.Create;
+   result := lI100BD.Inserir(self);
+   lI100BD.Free;
+   lI100BD := nil;
 end;
 
 end.

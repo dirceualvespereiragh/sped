@@ -42,7 +42,39 @@ begin
 end;
 
 function TI100BD.Inserir(const oRegistro: TRegistro): Boolean;
+var
+   ID  : Integer;
 begin
+   SetaDataBase(oRegistro);
+
+   ID := GeraId('I100');
+
+   Qry.sql.Clear;
+   Qry.SQL.Add('INSERT INTO I100(ID, CST, TOTALFATURAMENTO, VALORPIS, BASECALCULOPIS , ALIQUOTAPIS ,    ' + #13+
+               '                 VALORCOFINS,  BASECALCULOCOFINS , ALIQUOTACOFINS,  I010 )              ' + #13+
+               'VALUES                                                                                  ' + #13+
+               '(:pID, :pCST, :pTOTALFATURAMENTO, :pVALORPIS, :pBASECALCULOPIS , :pALIQUOTAPIS ,        ' + #13+
+               '  :pVALORCOFINS,  :pBASECALCULOCOFINS , :pALIQUOTACOFINS,  :pI010 )                     '  );
+
+   TI100(oRegistro).ID                                          := ID;
+   Qry.ParamByName('pID').AsInteger                             := ID;
+   Qry.ParamByName('pCST').AsInteger                            := TI100(oRegistro).CST.ID;
+   Qry.ParamByName('pALIQUOTAPIS').AsFloat                      := TI100(oRegistro).AliquotaPIS;
+   Qry.ParamByName('pALIQUOTACOFINS').AsFloat                   := TI100(oRegistro).AliquotaCOFINS;
+   Qry.ParamByName('pI010').AsInteger                           := TI100(oRegistro).I010.ID;
+
+   try
+      Qry.ExecSQL;
+      Qry.Database.DefaultTransaction.Commit;
+   except
+      on e:Exception do begin
+         Qry.Close;
+         Qry.Free;
+         raise exception.Create('Erro na inserção');
+      end;
+   end;
+   Qry.Close;
+   Qry.Free;
 end;
 
 function TI100BD.Procurar(const oRegistro: TRegistro): TRegistro;
@@ -75,6 +107,7 @@ begin
              lCST            := TCST.create;
              lI100.ID          := Qry.FieldByName('ID').AsInteger;
              lCST.ID           := Qry.FieldByName('CST').AsInteger;
+             lCST.Procurar;
              lI100.CST         := lCST;
              lI100s.Add(lI100);
              Qry.Next;

@@ -22,6 +22,7 @@ type
          property Descricao      : String      read fDescricao   write SetDescricao;
          property Codigo         : String      read fCodigo      write SetCodigo;
          function Todos : TObjectList;
+         function Procurar  ()  : TRegistro;
          constructor create();
    end;
 
@@ -38,6 +39,14 @@ uses
 constructor TCST.create;
 begin
 
+end;
+
+function TCST.Procurar: TRegistro;
+var
+   lCSTBD : TCSTBD;
+begin
+   lCSTBD := TCSTBD.Create;
+   result := lCSTBD.Procurar(self);
 end;
 
 procedure TCST.SetCodigo(const Value: String);

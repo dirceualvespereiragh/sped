@@ -39,7 +39,14 @@ begin
 end;
 
 function TCSTBD.Procurar(const oRegistro: TRegistro): TRegistro;
+var
+   lCSTs           : TObjectList;
+   I : Integer;
 begin
+   lCSTs := TObjectList.Create;
+   lCSTs := Todos;
+   i := lCSTs.IndexOf(self);
+   result := TCST(lCSTs[i]);
 end;
 
 function TCSTBD.Todos(): TObjectList;
