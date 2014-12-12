@@ -28,6 +28,7 @@ type
       procedure ListaEmpresas;
       procedure ListaSped;
       procedure ListaI100;
+      procedure ListaI200;
       procedure TelaIncluiI010;
       procedure TelaIncluiI100;
       procedure Salvar;
@@ -76,6 +77,7 @@ begin
    FView.DoListaI100       := ListaI100;
    fView.IncluiI010        := TelaIncluiI010;
    fView.IncluiI100        := TelaIncluiI100;
+   fView.DOListaI200       := ListaI200;
    ListaEmpresas;
    FView.Initialize;
    FView.ShowModal;
@@ -205,9 +207,7 @@ begin
    fcbIdentificadorOperacao.Left   := 288;
    fcbIdentificadorOperacao.Top    := 52;
    fcbIdentificadorOperacao.Width  := 470;
-
 end;
-
 
 
 procedure TControle.ListaI100;
@@ -338,5 +338,10 @@ begin
    end;
 
 end;
+procedure TControle.ListaI200;
+begin
+
+end;
+
 end.
 

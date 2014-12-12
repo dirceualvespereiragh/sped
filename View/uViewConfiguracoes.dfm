@@ -13,7 +13,7 @@ object ViewConfiguracoes: TViewConfiguracoes
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
+  object pEmpresa: TPanel
     Left = 0
     Top = 0
     Width = 911
@@ -46,7 +46,7 @@ object ViewConfiguracoes: TViewConfiguracoes
       OnClick = bPesquisarClick
     end
   end
-  object Panel2: TPanel
+  object pRodape: TPanel
     Left = 0
     Top = 744
     Width = 911
@@ -54,7 +54,7 @@ object ViewConfiguracoes: TViewConfiguracoes
     Align = alBottom
     TabOrder = 1
   end
-  object Panel3: TPanel
+  object pCentral: TPanel
     Left = 0
     Top = 57
     Width = 911
@@ -167,6 +167,63 @@ object ViewConfiguracoes: TViewConfiguracoes
         ParentFont = False
       end
       object sgI100: TStringGrid
+        Left = 8
+        Top = 40
+        Width = 889
+        Height = 144
+        ColCount = 3
+        FixedCols = 0
+        TabOrder = 0
+        OnClick = sgI100Click
+        OnSelectCell = sgI100SelectCell
+        ColWidths = (
+          483
+          209
+          179)
+      end
+    end
+    object PBI200: TPanel
+      Left = 1
+      Top = 386
+      Width = 909
+      Height = 217
+      Align = alTop
+      TabOrder = 2
+      object Label4: TLabel
+        Left = 14
+        Top = 5
+        Width = 51
+        Height = 13
+        Caption = 'Bloco I200'
+      end
+      object sbIncluirI200: TSpeedButton
+        Left = 648
+        Top = 8
+        Width = 23
+        Height = 22
+        Caption = '+'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -24
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = sbIncluirI100Click
+      end
+      object sbExcluiI200: TSpeedButton
+        Left = 688
+        Top = 8
+        Width = 23
+        Height = 22
+        Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -24
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object sgI200: TStringGrid
         Left = 8
         Top = 40
         Width = 889

@@ -45,13 +45,12 @@ var
 begin
    lCSTs := TObjectList.Create;
    lCSTs := Todos;
-   // Não encontrei um jeito melhor de pesquisar então foi na mão mesmo
    lCSTs.First;
    I := 0;
-//   result := nil;
+   result := nil;
    while (I < lCSTs.Count) do begin
-      if  ( TCST(self).ID = (TCST(lCSTs[I]).ID) ) then begin
-         result :=  TCST(lCSTs[I]);
+      if  ( TCST(oRegistro).ID = (TCST(lCSTs[I]).ID) ) then begin
+         result :=   TCST(lCSTs[I]); 
          I :=  lCSTs.Count;
       end;
       inc(I);

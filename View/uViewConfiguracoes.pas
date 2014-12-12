@@ -19,11 +19,11 @@ type
 
 
   TViewConfiguracoes = class(TForm)
-    Panel1: TPanel;
+    pEmpresa: TPanel;
     cbEmpresa: TComboBox;
     bPesquisar: TButton;
-    Panel2: TPanel;
-    Panel3: TPanel;
+    pRodape: TPanel;
+    pCentral: TPanel;
     Label1: TLabel;
     PBlocoI010: TPanel;
     Label2: TLabel;
@@ -36,11 +36,19 @@ type
     sbIncluirI100: TSpeedButton;
     sbExcluirI100: TSpeedButton;
     lSpedID: TLabel;
+    PBI200: TPanel;
+    Label4: TLabel;
+    sbIncluirI200: TSpeedButton;
+    sbExcluiI200: TSpeedButton;
+    sgI200: TStringGrid;
     procedure bPesquisarClick(Sender: TObject);
     procedure sbIncluiI010Click(Sender: TObject);
     procedure sgI010SelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure sgI010Click(Sender: TObject);
     procedure sbIncluirI100Click(Sender: TObject);
+    procedure sgI100Click(Sender: TObject);
+    procedure sgI100SelectCell(Sender: TObject; ACol, ARow: Integer;
+      var CanSelect: Boolean);
   private
      FModelo  : TEmpresa;
      FModeloI010 : TI010;
@@ -48,14 +56,17 @@ type
      FIncluiI010: TListaEvent;
      FDoListaI100: TListaEvent;
      FIncluiI100: TListaEvent;
+    FDoListaI200: TListaEvent;
      procedure SetModel(const Value: TEmpresa);
      procedure SetDoLista(const Value: TListaEvent);
      procedure SetIncluiI010(const Value: TListaEvent);
      procedure SetDoListaI100(const Value: TListaEvent);
      procedure SetModeloI010(const Value: TI010);
     procedure SetIncluiI100(const Value: TListaEvent);
+    procedure SetDoListaI200(const Value: TListaEvent);
   public
-     fLinhaSg010 : Integer;
+     fLinhaSg010  : Integer;
+     fLinhasgI100 : Integer;
      procedure Initialize;
      procedure ModeloMudou;
      property Modelo      : TEmpresa     read FModelo       write SetModel;
@@ -63,6 +74,7 @@ type
      property DoLista     : TListaEvent  read FDoLista      write SetDoLista;
      property IncluiI010  : TListaEvent  read FIncluiI010   write SetIncluiI010;
      property DoListaI100 : TListaEvent  read FDoListaI100  write SetDoListaI100;
+     property DOListaI200 : TListaEvent  read FDoListaI200  write SetDoListaI200;
      property IncluiI100  : TListaEvent  read FIncluiI100   write SetIncluiI100;
   end;
 
@@ -140,6 +152,21 @@ end;
 procedure TViewConfiguracoes.SetIncluiI100(const Value: TListaEvent);
 begin
   FIncluiI100 := Value;
+end;
+
+procedure TViewConfiguracoes.sgI100Click(Sender: TObject);
+begin
+   DoListaI200;
+end;
+
+procedure TViewConfiguracoes.sgI100SelectCell(Sender: TObject; ACol,   ARow: Integer; var CanSelect: Boolean);
+begin
+   fLinhasgI100 := Arow;
+end;
+
+procedure TViewConfiguracoes.SetDoListaI200(const Value: TListaEvent);
+begin
+  FDoListaI200 := Value;
 end;
 
 end.

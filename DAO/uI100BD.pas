@@ -103,11 +103,11 @@ begin
           lI100s := TObjectList.create;
           Qry.First;
           while (not Qry.Eof ) do begin
-             lI100           := TI100.Create;
-             lCST            := TCST.create;
+             lI100             := TI100.Create;
+             lCST              := TCST.create;
              lI100.ID          := Qry.FieldByName('ID').AsInteger;
              lCST.ID           := Qry.FieldByName('CST').AsInteger;
-             lCST.Procurar;
+             lCST.Procurar();
              lI100.CST         := lCST;
              lI100s.Add(lI100);
              Qry.Next;

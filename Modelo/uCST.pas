@@ -45,8 +45,10 @@ function TCST.Procurar: TRegistro;
 var
    lCSTBD : TCSTBD;
 begin
-   lCSTBD := TCSTBD.Create;
-   result := lCSTBD.Procurar(self);
+   lCSTBD  := TCSTBD.Create;
+   result  := lCSTBD.Procurar(self);
+   fDescricao := TCST(result).fDescricao;
+   fCodigo    := TCST(result).fCodigo;
 end;
 
 procedure TCST.SetCodigo(const Value: String);

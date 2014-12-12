@@ -97,7 +97,7 @@ PackageDCPOutputDir=
 SearchPath=.\Controle;.\Modelo;.\View;.\DAO;..\Comum\BD;..\Comum\Geral
 Packages=vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;ibxpress;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP
 Conditionals=
-DebugSourceDirs=C:\prg\comum\BD\;T:\dirceu\Estudo\sped\Modelo\;T:\dirceu\Estudo\sped\DAO\;T:\dirceu\Estudo\sped\Controle\;T:\dirceu\Estudo\sped\View\;C:\prg\sped\View\;C:\prg\sped\Modelo\;C:\prg\sped\DAO\
+DebugSourceDirs=C:\prg\comum\BD\;T:\dirceu\Estudo\sped\Modelo\;T:\dirceu\Estudo\sped\DAO\;T:\dirceu\Estudo\sped\Controle\;T:\dirceu\Estudo\sped\View\;C:\prg\sped\View\;C:\prg\sped\Modelo\;C:\prg\sped\DAO\;C:\prg\comum\Geral\
 UsePackages=0
 [Parameters]
 RunParams=
