@@ -47,7 +47,8 @@ type
       procedure MontaTelaIncluiI200;
       Procedure MontaCamposTelaIncluiI010(var fcbIdentificadorOperacao : TComboBox;   flIdentificadorOperacao  : TLabel );
       Procedure MontaCamposTelaIncluiI100(var fcbCST : TComboBox;   flCST  : TLabel );
-      Procedure MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel; fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);      
+      Procedure MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel; var fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);
+      Procedure SelecionouComboBoxNumeroCampo(Sender: TObject);
    end;
 
 implementation
@@ -112,7 +113,9 @@ begin
       if lClasse = TCST then
          lComboBox.AddItem(   TCST(lObjectList.Items[x]).Descricao , (TCST(lObjectList.Items[x]) )  );
       if lClasse = TNumeroCampo then
-         lComboBox.AddItem(   TNumeroCampo(lObjectList.Items[x]).Descricao , (TCST(lObjectList.Items[x]) )  );
+         lComboBox.AddItem(   TNumeroCampo(lObjectList.Items[x]).Descricao , (TNumeroCampo(lObjectList.Items[x]) )  );
+      if lClasse =   TTipoDetalhamento  then
+         lComboBox.AddItem(   TTipoDetalhamento(lObjectList.Items[x]).Descricao , (TTipoDetalhamento(lObjectList.Items[x]) )  );
       inc(x);
    end;
    lComboBox.ItemIndex := 0;
@@ -380,7 +383,8 @@ begin
    lNumeroSCampos :=  fModeloNumeroCampo.Todos;
    cbNumeroCampo.Clear;
    CopiaObjectList(lNumeroSCampos,cbNumeroCampo,TNumeroCampo );
-   cbTipoDetalhamento.Clear;
+   cbNumeroCampo.ItemIndex := 0;
+   SelecionouComboBoxNumeroCampo(cbNumeroCampo);
    fViewInclusao.ShowModal;
    fViewInclusao.Free  ;
    fViewInclusao := nil;
@@ -399,7 +403,7 @@ begin
 end;
 
 
-Procedure TControle.MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel; fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);
+Procedure TControle.MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel;var  fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);
 var
    flContaContabil : TLabel;
 begin
@@ -414,6 +418,7 @@ begin
    fcbNumeroCampo.Left   := 170;
    fcbNumeroCampo.Top    := 24;
    fcbNumeroCampo.Width  := 470;
+   fcbNumeroCampo.OnSelect  := SelecionouComboBoxNumeroCampo;
 
    flTipoDetalhamento := Tlabel.Create (fViewInclusao);
    flTipoDetalhamento.Parent :=  fViewInclusao.Panel3;
@@ -432,12 +437,26 @@ begin
    flContaContabil.Left   := 32;
    flContaContabil.Top    := 120;
    flContaContabil.Caption :=  'Conta Contábil';
-
-
 end;
 
 
+procedure TControle.SelecionouComboBoxNumeroCampo(Sender: TObject);
+var
+   fcombobox    : TComboBox;
+   fNumeroCampo : TNumeroCampo;
+   fTiposDetalhamentos : TObjectList;
 
+begin
+   fNumeroCampo := TNumeroCampo.create;
+   fNumeroCampo.ID := ( TNumeroCampo(  TComboBox(sender).Items.Objects[ TComboBox(sender).ItemIndex]).ID);
+   fcombobox := (fViewInclusao.FindComponent('cbTipoDetalhamento') as TComboBox);
+   fcombobox.Clear;
+   fModeloTipoDetalhamento := TTipoDetalhamento.create();
+   fTiposDetalhamentos :=  TObjectlist.create;
+   fModeloTipoDetalhamento.NumeroCampo.ID := fNumeroCampo.ID;
+   fTiposDetalhamentos :=  fModeloTipoDetalhamento.TodosDoNumeroCampo;
+   CopiaObjectList(fTiposDetalhamentos,fcombobox,TTipoDetalhamento );
+end;
 
 
 end.

@@ -11,10 +11,10 @@ type
 
    TTipoDetalhamento = class(TRegistro)
       private
-         fID              : Integer;
+         fID               : Integer;
          fCodigo           : String;
          fDescricao        : String;
-    fNumeroCampo: TNumeroCampo;
+         fNumeroCampo      : TNumeroCampo;
          procedure SetCodigo(const Value: String);
          procedure SetDescricao(const Value: String);
          procedure SetID(const Value: Integer);
@@ -25,6 +25,7 @@ type
          property Descricao      : String       read fDescricao   write SetDescricao;
          property Codigo         : String       read fCodigo      write SetCodigo;
          function Todos : TObjectList;
+         function TodosDoNumeroCampo : TObjectList;
          function Procurar  ()  : TRegistro;
          constructor create();
    end;
@@ -80,6 +81,14 @@ var
 begin
    lTipoDetalhamentoBD := TTipoDetalhamentoBD.Create;
    result := lTipoDetalhamentoBD.Todos();
+end;
+
+function TTipoDetalhamento.TodosDoNumeroCampo: TObjectList;
+var
+   lTipoDetalhamentoBD : TTipoDetalhamentoBD;
+begin
+   lTipoDetalhamentoBD := TTipoDetalhamentoBD.Create;
+   result := lTipoDetalhamentoBD.TodosDoNumeroCampo(self);
 end;
 
 end.
