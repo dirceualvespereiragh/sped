@@ -20,14 +20,14 @@ object ViewInclusao: TViewInclusao
     Height = 41
     Align = alBottom
     TabOrder = 0
-    object Button1: TButton
+    object btFechar: TButton
       Left = 488
       Top = 8
       Width = 99
       Height = 25
       Caption = 'Fechar'
       TabOrder = 0
-      OnClick = Button1Click
+      OnClick = btFecharClick
     end
     object btSalvar: TButton
       Left = 248

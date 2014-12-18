@@ -2,7 +2,8 @@ program SPED;
 
 uses
   Forms,
-  uPrincipal in 'uPrincipal.pas' {frmSped};
+  uPrincipal in 'uPrincipal.pas' {frmSped},
+  uContaContabil in 'Modelo\uContaContabil.pas';
 
 {$R *.res}
 

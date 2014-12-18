@@ -8,7 +8,8 @@ uses
    Contnrs,  StdCtrls      , SysUtils   , Grids,
 
    MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped,
-   uIndicadorOperacoes,uRegistro,UI010, UI100, UCST, uValidar,uExcecao;
+   uIndicadorOperacoes,uRegistro,UI010, UI100, UI200, UCST, uValidar,uExcecao,
+   UNumeroCampo, uTipoDetalhamento;
 
 type
    TControle = class(TInterfacedObject, IControle)
@@ -21,6 +22,9 @@ type
       fModeloI010                 : TI010;
       fModeloI100                 : TI100;
       fModeloCST                  : TCST;
+      fModeloI200                 : TI200;
+      fModeloNumeroCampo          : TNumeroCampo;
+      fModeloTipoDetalhamento     : TTipoDetalhamento;
    public
       constructor Create; reintroduce;
       destructor  Destroy; override;
@@ -31,14 +35,19 @@ type
       procedure ListaI200;
       procedure TelaIncluiI010;
       procedure TelaIncluiI100;
+      procedure TelaIncluiI200;      
+
       procedure Salvar;
       procedure SalvarI100;
+      procedure SalvarI200;
       procedure CopiaObjectList(lObjectList : TObjectList;lComboBox : TComboBox; lClasse : TClass);
       procedure LimpaStringGrid(lStringGrid : TStringGrid);
       procedure MontaTelaIncluiI010;
       procedure MontaTelaIncluiI100;
+      procedure MontaTelaIncluiI200;
       Procedure MontaCamposTelaIncluiI010(var fcbIdentificadorOperacao : TComboBox;   flIdentificadorOperacao  : TLabel );
       Procedure MontaCamposTelaIncluiI100(var fcbCST : TComboBox;   flCST  : TLabel );
+      Procedure MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel; fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);      
    end;
 
 implementation
@@ -59,6 +68,7 @@ begin
    fModeloSped   := TSped.create;
    fModeloI010   := TI010.create;
    fModeloI100   := TI100.create;
+   fModeloI200   := TI200.create;
    FView         := TViewConfiguracoes.Create(nil);
 end;
 
@@ -77,6 +87,7 @@ begin
    FView.DoListaI100       := ListaI100;
    fView.IncluiI010        := TelaIncluiI010;
    fView.IncluiI100        := TelaIncluiI100;
+   fView.IncluiI200        := TelaIncluiI200;
    fView.DOListaI200       := ListaI200;
    ListaEmpresas;
    FView.Initialize;
@@ -100,6 +111,8 @@ begin
          lComboBox.AddItem(   TIndicadorOperacoes(lObjectList.Items[x]).Descricao , (TIndicadorOperacoes(lObjectList.Items[x]) )  );
       if lClasse = TCST then
          lComboBox.AddItem(   TCST(lObjectList.Items[x]).Descricao , (TCST(lObjectList.Items[x]) )  );
+      if lClasse = TNumeroCampo then
+         lComboBox.AddItem(   TNumeroCampo(lObjectList.Items[x]).Descricao , (TCST(lObjectList.Items[x]) )  );
       inc(x);
    end;
    lComboBox.ItemIndex := 0;
@@ -339,9 +352,93 @@ begin
 
 end;
 procedure TControle.ListaI200;
+var
+   I                 : Integer;
+begin
+   FModeloI100 :=  TI100( fView.sgI100.Objects [0,fView.fLinhasgI100] );
+end;
+
+procedure TControle.SalvarI200;
 begin
 
 end;
+
+procedure TControle.TelaIncluiI200;
+var
+   cbNumeroCampo           : TComboBox;
+   lNumeroCampo            : TLabel;
+   lNumeroSCampos          : TObjectList;
+   cbTipoDetalhamento      : TComboBox;
+   lTipoDetalhamento       : TLabel;
+   lTiposDetalhamentos     : TObjectList;
+begin
+   fModeloI200.I100.ID := fModeloI100.ID;
+   MontaTelaIncluiI200;
+   MontaCamposTelaIncluiI200(cbNumeroCampo,lNumeroCampo,cbTipoDetalhamento,lTipoDetalhamento);
+   fModeloNumeroCampo  := TNumeroCampo.create;
+   lNumeroSCampos :=  TObjectlist.create;
+   lNumeroSCampos :=  fModeloNumeroCampo.Todos;
+   cbNumeroCampo.Clear;
+   CopiaObjectList(lNumeroSCampos,cbNumeroCampo,TNumeroCampo );
+   cbTipoDetalhamento.Clear;
+   fViewInclusao.ShowModal;
+   fViewInclusao.Free  ;
+   fViewInclusao := nil;
+
+end;
+
+procedure TControle.MontaTelaIncluiI200;
+begin
+   fViewInclusao := TViewInclusao.Create(nil);
+   fViewInclusao.Initialize;
+   fViewInclusao.Salvar    := SalvarI200;
+   fViewInclusao.Height    := 300;
+   fViewInclusao.reTitulo.Clear;
+   fViewInclusao.reTitulo.Lines.Add('Registro I200');
+   fViewInclusao.reTitulo.Lines.Add('I200 - Detalhamento das Receitas Deduções e/ou Exclusões do Período');
+end;
+
+
+Procedure TControle.MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel; fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);
+var
+   flContaContabil : TLabel;
+begin
+   flNumeroCampo := Tlabel.Create (fViewInclusao);
+   flNumeroCampo.Parent :=  fViewInclusao.Panel3;
+   flNumeroCampo.Left   := 32;
+   flNumeroCampo.Top    := 30;
+   flNumeroCampo.Caption :=  'Número do Campo';
+   fcbNumeroCampo := TComboBox.Create(fViewInclusao);
+   fcbNumeroCampo.Name   := 'cbNumeroCampo';
+   fcbNumeroCampo.Parent := fViewInclusao.Panel3;
+   fcbNumeroCampo.Left   := 170;
+   fcbNumeroCampo.Top    := 24;
+   fcbNumeroCampo.Width  := 470;
+
+   flTipoDetalhamento := Tlabel.Create (fViewInclusao);
+   flTipoDetalhamento.Parent :=  fViewInclusao.Panel3;
+   flTipoDetalhamento.Left   := 32;
+   flTipoDetalhamento.Top    := 80;
+   flTipoDetalhamento.Caption :=  'Tipo Detalhamento';
+   fcbTipoDetalhamento := TComboBox.Create(fViewInclusao);
+   fcbTipoDetalhamento.Name   := 'cbTipoDetalhamento';
+   fcbTipoDetalhamento.Parent := fViewInclusao.Panel3;
+   fcbTipoDetalhamento.Left   := 170;
+   fcbTipoDetalhamento.Top    := 74;
+   fcbTipoDetalhamento.Width  := 470;
+
+   flContaContabil := Tlabel.Create (fViewInclusao);
+   flContaContabil.Parent :=  fViewInclusao.Panel3;
+   flContaContabil.Left   := 32;
+   flContaContabil.Top    := 120;
+   flContaContabil.Caption :=  'Conta Contábil';
+
+
+end;
+
+
+
+
 
 end.
 

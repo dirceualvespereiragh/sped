@@ -17,12 +17,12 @@ type
 
   TViewInclusao = class(TForm)
     Panel1: TPanel;
-    Button1: TButton;
+    btFechar: TButton;
     btSalvar: TButton;
     Panel2: TPanel;
     reTitulo: TRichEdit;
     Panel3: TPanel;
-    procedure Button1Click(Sender: TObject);
+    procedure btFecharClick(Sender: TObject);
     procedure btSalvarClick(Sender: TObject);
   private
     FSalvar: TListaEvent;
@@ -41,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TViewInclusao.Button1Click(Sender: TObject);
+procedure TViewInclusao.btFecharClick(Sender: TObject);
 begin
    close;
 end;

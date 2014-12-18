@@ -208,7 +208,7 @@ object ViewConfiguracoes: TViewConfiguracoes
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = sbIncluirI100Click
+        OnClick = sbIncluirI200Click
       end
       object sbExcluiI200: TSpeedButton
         Left = 688
