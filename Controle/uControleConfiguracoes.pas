@@ -9,7 +9,7 @@ uses
 
    MVCInterfaces, uViewConfiguracoes, uViewInclusao,uEmpresa, uSped,
    uIndicadorOperacoes,uRegistro,UI010, UI100, UI200, UCST, uValidar,uExcecao,
-   UNumeroCampo, uTipoDetalhamento;
+   UNumeroCampo, uTipoDetalhamento, uContaContabil;
 
 type
    TControle = class(TInterfacedObject, IControle)
@@ -25,6 +25,7 @@ type
       fModeloI200                 : TI200;
       fModeloNumeroCampo          : TNumeroCampo;
       fModeloTipoDetalhamento     : TTipoDetalhamento;
+      fModeloContaContabil        : TContaContabil;
    public
       constructor Create; reintroduce;
       destructor  Destroy; override;
@@ -47,8 +48,11 @@ type
       procedure MontaTelaIncluiI200;
       Procedure MontaCamposTelaIncluiI010(var fcbIdentificadorOperacao : TComboBox;   flIdentificadorOperacao  : TLabel );
       Procedure MontaCamposTelaIncluiI100(var fcbCST : TComboBox;   flCST  : TLabel );
-      Procedure MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel; var fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);
+      Procedure MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel;
+                var fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel;  flContaContabil : Tlabel;
+                fedCodigoContaContabil : Tedit; fedDescricaoContaContabil : Tedit);
       Procedure SelecionouComboBoxNumeroCampo(Sender: TObject);
+      Procedure ProcuraContaContabil(Sender: TObject);
    end;
 
 implementation
@@ -368,16 +372,21 @@ end;
 
 procedure TControle.TelaIncluiI200;
 var
-   cbNumeroCampo           : TComboBox;
-   lNumeroCampo            : TLabel;
-   lNumeroSCampos          : TObjectList;
-   cbTipoDetalhamento      : TComboBox;
-   lTipoDetalhamento       : TLabel;
-   lTiposDetalhamentos     : TObjectList;
+   cbNumeroCampo            : TComboBox;
+   lNumeroCampo             : TLabel;
+   lNumeroSCampos           : TObjectList;
+   cbTipoDetalhamento       : TComboBox;
+   lTipoDetalhamento        : TLabel;
+   lTiposDetalhamentos      : TObjectList;
+   lContaContabil           : TLabel;
+   edCodigoContaContabil    : TEdit;
+   edDescricaoContaContabil : TEdit;
 begin
    fModeloI200.I100.ID := fModeloI100.ID;
+   fModeloContaContabil := TContaContabil.create;
    MontaTelaIncluiI200;
-   MontaCamposTelaIncluiI200(cbNumeroCampo,lNumeroCampo,cbTipoDetalhamento,lTipoDetalhamento);
+   MontaCamposTelaIncluiI200(cbNumeroCampo,lNumeroCampo,cbTipoDetalhamento,lTipoDetalhamento,
+   lContaContabil,edCodigoContaContabil,edDescricaoContaContabil);
    fModeloNumeroCampo  := TNumeroCampo.create;
    lNumeroSCampos :=  TObjectlist.create;
    lNumeroSCampos :=  fModeloNumeroCampo.Todos;
@@ -385,6 +394,7 @@ begin
    CopiaObjectList(lNumeroSCampos,cbNumeroCampo,TNumeroCampo );
    cbNumeroCampo.ItemIndex := 0;
    SelecionouComboBoxNumeroCampo(cbNumeroCampo);
+
    fViewInclusao.ShowModal;
    fViewInclusao.Free  ;
    fViewInclusao := nil;
@@ -403,9 +413,9 @@ begin
 end;
 
 
-Procedure TControle.MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel;var  fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel);
-var
-   flContaContabil : TLabel;
+Procedure TControle.MontaCamposTelaIncluiI200(var fcbNumeroCampo: TComboBox; flNumeroCampo : TLabel;
+                    var  fcbTipoDetalhamento: TComboBox; flTipoDetalhamento : Tlabel ; flContaContabil : Tlabel;
+                fedCodigoContaContabil : Tedit; fedDescricaoContaContabil : Tedit);
 begin
    flNumeroCampo := Tlabel.Create (fViewInclusao);
    flNumeroCampo.Parent :=  fViewInclusao.Panel3;
@@ -437,6 +447,19 @@ begin
    flContaContabil.Left   := 32;
    flContaContabil.Top    := 120;
    flContaContabil.Caption :=  'Conta Contábil';
+
+   fedCodigoContaContabil                 := Tedit.Create (fViewInclusao);
+   fedCodigoContaContabil.Parent          :=   fViewInclusao.Panel3;
+   fedCodigoContaContabil.Top             := 120;
+   fedCodigoContaContabil.Left            := 180;
+   fedCodigoContaContabil.OnExit          := ProcuraContaContabil;
+
+   fedDescricaoContaContabil                 := Tedit.Create (fViewInclusao);
+   fedDescricaoContaContabil.Parent          :=   fViewInclusao.Panel3;
+   fedDescricaoContaContabil.Top             := 120;
+   fedDescricaoContaContabil.Left            := 320;
+
+
 end;
 
 
@@ -458,6 +481,14 @@ begin
    CopiaObjectList(fTiposDetalhamentos,fcombobox,TTipoDetalhamento );
 end;
 
+
+procedure TControle.ProcuraContaContabil(Sender: TObject);
+begin
+   fModeloContaContabil.CodigoReduzido := ( TEdit(sender).text);
+   //fModeloContaContabil  :=
+   fModeloContaContabil.Procurar();
+   fViewInclusao.btFechar.Caption := fModeloContaContabil.Descricao;
+end;
 
 end.
 
